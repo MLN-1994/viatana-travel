@@ -1,59 +1,100 @@
 import { TravelPackage } from "@/types"
-import { readFile, writeFile } from "fs/promises"
-import { join } from "path"
+import { supabase, supabaseAdmin } from "./supabase"
 
-const DATA_FILE = join(process.cwd(), "data", "packages.json")
-
-export async function getPackages(): Promise<TravelPackage[]> {
-  try {
-    const data = await readFile(DATA_FILE, "utf-8")
-    return JSON.parse(data)
-  } catch {
-    // Si el archivo no existe, usar los paquetes iniciales
-    const { travelPackages } = await import("@/data/packages")
-    await savePackages(travelPackages)
-    return travelPackages
+// Mapeo de nombres de columnas (DB usa snake_case, TypeScript usa camelCase)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function dbToPackage(dbRow: any): TravelPackage {
+  return {
+    id: dbRow.id,
+    title: dbRow.title,
+    destination: dbRow.destination,
+    description: dbRow.description,
+    price: dbRow.price,
+    duration: dbRow.duration,
+    image: dbRow.image,
+    category: dbRow.category,
+    isOffer: dbRow.is_offer,
+    originalPrice: dbRow.original_price,
+    discount: dbRow.discount,
+    included: typeof dbRow.included === 'string' ? JSON.parse(dbRow.included) : dbRow.included
   }
 }
 
-export async function savePackages(packages: TravelPackage[]): Promise<void> {
-  await writeFile(DATA_FILE, JSON.stringify(packages, null, 2), "utf-8")
+function packageToDb(pkg: Partial<TravelPackage>): Record<string, unknown> {
+  return {
+    title: pkg.title,
+    destination: pkg.destination,
+    description: pkg.description,
+    price: pkg.price,
+    duration: pkg.duration,
+    image: pkg.image,
+    category: pkg.category,
+    is_offer: pkg.isOffer || false,
+    original_price: pkg.originalPrice || null,
+    discount: pkg.discount || null,
+    included: JSON.stringify(pkg.included || [])
+  }
+}
+
+export async function getPackages(): Promise<TravelPackage[]> {
+  const { data, error } = await supabase
+    .from('packages')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching packages:', error)
+    return []
+  }
+
+  return data.map(dbToPackage)
 }
 
 export async function addPackage(newPackage: Omit<TravelPackage, "id">): Promise<TravelPackage> {
-  const packages = await getPackages()
-  const maxId = packages.length > 0 
-    ? Math.max(...packages.map(pkg => parseInt(pkg.id)))
-    : 0
+  const dbData = packageToDb(newPackage)
   
-  const packageWithId = {
-    ...newPackage,
-    id: (maxId + 1).toString()
+  const { data, error } = await supabaseAdmin
+    .from('packages')
+    .insert([dbData])
+    .select()
+    .single()
+
+  if (error) {
+    console.error('Error adding package:', error)
+    throw new Error('Failed to add package')
   }
-  
-  packages.push(packageWithId)
-  await savePackages(packages)
-  return packageWithId
+
+  return dbToPackage(data)
 }
 
 export async function updatePackage(id: string, updatedData: Partial<TravelPackage>): Promise<TravelPackage | null> {
-  const packages = await getPackages()
-  const index = packages.findIndex(pkg => pkg.id === id)
+  const dbData = packageToDb(updatedData)
   
-  if (index === -1) return null
-  
-  packages[index] = { ...packages[index], ...updatedData, id }
-  await savePackages(packages)
-  return packages[index]
+  const { data, error } = await supabaseAdmin
+    .from('packages')
+    .update(dbData)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) {
+    console.error('Error updating package:', error)
+    return null
+  }
+
+  return dbToPackage(data)
 }
 
 export async function deletePackage(id: string): Promise<boolean> {
-  const packages = await getPackages()
-  const index = packages.findIndex(pkg => pkg.id === id)
-  
-  if (index === -1) return false
-  
-  packages.splice(index, 1)
-  await savePackages(packages)
+  const { error } = await supabaseAdmin
+    .from('packages')
+    .delete()
+    .eq('id', id)
+
+  if (error) {
+    console.error('Error deleting package:', error)
+    return false
+  }
+
   return true
 }
