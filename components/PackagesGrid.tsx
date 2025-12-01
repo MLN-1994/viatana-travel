@@ -1,11 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PackageCard from './PackageCard';
-import { travelPackages } from '@/data/packages';
+import { TravelPackage } from '@/types';
 
 export default function PackagesGrid() {
   const [filter, setFilter] = useState<string>('all');
+  const [travelPackages, setTravelPackages] = useState<TravelPackage[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/packages')
+      .then(res => res.json())
+      .then(data => {
+        setTravelPackages(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error al cargar paquetes:', err);
+        setLoading(false);
+      });
+  }, []);
 
   const categories = [
     { id: 'all', label: '🌍 Todos' },
@@ -51,18 +66,26 @@ export default function PackagesGrid() {
         </div>
 
         {/* Packages grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-          {filteredPackages.map((pkg) => (
-            <PackageCard key={pkg.id} package={pkg} />
-          ))}
-        </div>
-
-        {filteredPackages.length === 0 && (
+        {loading ? (
           <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">
-              No hay paquetes disponibles en esta categoría
-            </p>
+            <p className="text-gray-600 text-lg">Cargando paquetes...</p>
           </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+              {filteredPackages.map((pkg) => (
+                <PackageCard key={pkg.id} package={pkg} />
+              ))}
+            </div>
+
+            {filteredPackages.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-600 text-lg">
+                  No hay paquetes disponibles en esta categoría
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

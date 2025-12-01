@@ -4,22 +4,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { contactInfo } from '@/data/packages';
 import { FaFacebookSquare, FaInstagram, FaTwitter } from 'react-icons/fa';
-import { useSearch } from '@/contexts/SearchContext';
 
 export default function Header() {
-  const [localSearchTerm, setLocalSearchTerm] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { setSearchTerm } = useSearch();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSearchTerm(localSearchTerm);
-    // Scroll to packages section
-    const packagesSection = document.getElementById('paquetes');
-    if (packagesSection) {
-      packagesSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
@@ -84,27 +71,6 @@ export default function Header() {
           >
             {isMenuOpen ? '✕' : '☰'}
           </button>
-        </div>
-
-        {/* Search bar */}
-        <div className="pb-4">
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Busca tu destino ideal... (Ej: Cusco, playa, aventura)"
-                value={localSearchTerm}
-                onChange={(e) => setLocalSearchTerm(e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76]"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-[#6A3B76] text-white rounded-lg hover:bg-[#5a2f66] font-medium"
-              >
-                🔍 Buscar
-              </button>
-            </div>
-          </form>
         </div>
 
         {/* Mobile menu */}

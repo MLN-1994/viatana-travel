@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Bariloche Mágico - Invierno 2026",
+    "destination": "San Carlos de Bariloche, Argentina",
+    "description": "Descubre la magia del invierno patagónico con nuestro paquete todo incluido. Disfruta de esquí en Cerro Catedral, paseos por el centro cívico, excursión al Circuito Chico y una experiencia única en el bosque de arrayanes. Incluye traslados, alojamiento y actividades.",
+    "price": 850,
+    "duration": "5 días / 4 noches",
+    "image": "https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=800",
+    "isOffer": true,
+    "originalPrice": 1200,
+    "discount": 30,
+    "included": [
+      "Hotel 4 estrellas con desayuno buffet",
+      "Traslados aeropuerto - hotel - aeropuerto",
+      "Pase de 3 días para Cerro Catedral",
+      "Excursión Circuito Chico con guía",
+      "Paseo en catamarán Isla Victoria",
+      "Asistencia al viajero"
+    ],
+    "category": "nacional",
+    "id": "1"
+  }
+]

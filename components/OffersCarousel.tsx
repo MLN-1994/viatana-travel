@@ -1,15 +1,26 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { featuredOffers } from '@/data/packages';
+import { TravelPackage } from '@/types';
 import Image from 'next/image';
 
 export default function OffersCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [offers, setOffers] = useState<TravelPackage[]>([]);
+
+  useEffect(() => {
+    fetch('/api/packages')
+      .then(res => res.json())
+      .then(data => {
+        const featuredOffers = data.filter((pkg: TravelPackage) => pkg.isOffer);
+        setOffers(featuredOffers.slice(0, 3));
+      })
+      .catch(err => console.error('Error al cargar ofertas:', err));
+  }, []);
 
   // Limitar a solo 3 ofertas
-  const displayedOffers = featuredOffers.slice(0, 3);
+  const displayedOffers = offers;
 
   useEffect(() => {
     if (!isAutoPlaying) return;
