@@ -11,26 +11,43 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Contraseña", type: "password" }
       },
       async authorize(credentials) {
-        // Usuario admin hardcodeado
-        const adminUser = {
-          id: "1",
-          username: "admin",
-          password: "admin123"
-        }
+        // Lista de usuarios autorizados
+        const users = [
+          {
+            id: "1",
+            username: "admin",
+            password: "admin123",
+            email: "admin@viatana.com"
+          },
+          {
+            id: "2",
+            username: "viatana",
+            password: "viatana2025",
+            email: "info@viatana.com"
+          }
+          // Agregar más usuarios aquí:
+          // {
+          //   id: "3",
+          //   username: "usuario3",
+          //   password: "password3",
+          //   email: "usuario3@viatana.com"
+          // }
+        ]
 
         if (!credentials?.username || !credentials?.password) {
           return null
         }
 
-        // Verificar usuario y contraseña
-        if (
-          credentials.username === adminUser.username && 
-          credentials.password === adminUser.password
-        ) {
+        // Buscar usuario en la lista
+        const user = users.find(
+          u => u.username === credentials.username && u.password === credentials.password
+        )
+
+        if (user) {
           return {
-            id: adminUser.id,
-            name: adminUser.username,
-            email: "admin@viatana.com"
+            id: user.id,
+            name: user.username,
+            email: user.email
           }
         }
 
