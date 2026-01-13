@@ -50,6 +50,21 @@ export async function getPackages(): Promise<TravelPackage[]> {
   return data.map(dbToPackage)
 }
 
+export async function getPackageById(id: string): Promise<TravelPackage | null> {
+  const { data, error } = await supabase
+    .from('packages')
+    .select('*')
+    .eq('id', id)
+    .single()
+
+  if (error) {
+    console.error('Error fetching package:', error)
+    return null
+  }
+
+  return dbToPackage(data)
+}
+
 export async function addPackage(newPackage: Omit<TravelPackage, "id">): Promise<TravelPackage> {
   const dbData = packageToDb(newPackage)
   

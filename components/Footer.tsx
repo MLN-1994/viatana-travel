@@ -5,23 +5,47 @@ import { contactInfo } from '@/data/packages';
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState('');
+  const [statusMessage, setStatusMessage] = useState('');
 
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setStatusMessage('');
     
-    // Aquí puedes implementar la integración con tu servicio de newsletter
-    // Por ahora simularemos el envío
-    setTimeout(() => {
-      setMessage('¡Gracias por suscribirte! Pronto recibirás nuestras ofertas.');
-      setEmail('');
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatusMessage('¡Mensaje enviado! Te contactaremos pronto.');
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setStatusMessage('Error al enviar. Por favor, intenta de nuevo.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setStatusMessage('Error al enviar. Por favor, intenta de nuevo.');
+    } finally {
       setIsSubmitting(false);
-      
-      setTimeout(() => setMessage(''), 5000);
-    }, 1000);
+      setTimeout(() => setStatusMessage(''), 5000);
+    }
   };
 
   const currentYear = new Date().getFullYear();
@@ -63,31 +87,60 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Newsletter */}
+          {/* Contact Form */}
           <div>
-            <h4 className="text-xl font-bold mb-4">📧 Newsletter</h4>
+            <h4 className="text-xl font-bold mb-4">📧 Contáctanos</h4>
             <p className="text-gray-300 mb-4">
-              Suscríbete para recibir las mejores ofertas y promociones exclusivas
+              Envíanos tu consulta y te responderemos lo antes posible
             </p>
-            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+            <form onSubmit={handleContactSubmit} className="space-y-3">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Tu nombre"
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
+              />
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 placeholder="Tu correo electrónico"
                 required
-                className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white"
+                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
+              />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Tu teléfono (opcional)"
+                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
+              />
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder="Tu mensaje"
+                required
+                rows={3}
+                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400 resize-none"
               />
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full bg-[#6A3B76] hover:bg-[#5a2f66] text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Enviando...' : 'Suscribirse'}
+                {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
               </button>
             </form>
-            {message && (
-              <p className="mt-3 text-green-400 text-sm">{message}</p>
+            {statusMessage && (
+              <p className={`mt-3 text-sm ${statusMessage.includes('Error') ? 'text-red-400' : 'text-green-400'}`}>
+                {statusMessage}
+              </p>
             )}
           </div>
         </div>

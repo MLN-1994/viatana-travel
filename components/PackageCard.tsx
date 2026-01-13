@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { TravelPackage } from '@/types';
 import { contactInfo } from '@/data/packages';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -18,12 +19,12 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:shadow-2xl transform hover:-translate-y-2 flex flex-col min-h-[600px]">
-      <div className="relative h-64 overflow-hidden shrink-0">
+      <Link href={`/packages/${pkg.id}`} className="relative h-64 overflow-hidden shrink-0 cursor-pointer group">
         <Image
           src={pkg.image}
           alt={pkg.title}
           fill
-          className="object-cover transition-transform hover:scale-110"
+          className="object-cover transition-transform group-hover:scale-110"
         />
         {pkg.isOffer && (
           <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full font-bold">
@@ -33,10 +34,18 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
         <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
           {pkg.category.charAt(0).toUpperCase() + pkg.category.slice(1)}
         </div>
-      </div>
+        {/* Overlay with "Ver más" text */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <span className="text-white text-xl font-bold bg-[#6A3B76] px-6 py-3 rounded-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">
+            Ver más detalles
+          </span>
+        </div>
+      </Link>
 
       <div className="p-6 flex flex-col grow">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2 line-clamp-2">{pkg.title}</h3>
+        <Link href={`/packages/${pkg.id}`}>
+          <h3 className="text-2xl font-bold text-gray-800 mb-2 line-clamp-2 hover:text-[#6A3B76] transition-colors cursor-pointer">{pkg.title}</h3>
+        </Link>
         <p className="text-gray-600 mb-3 flex items-center gap-2">
           <span>📍</span> {pkg.destination}
         </p>
@@ -86,15 +95,23 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
             </div>
           </div>
 
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2"
-          >
-            <FaWhatsapp className="text-xl" />
-            Consulta por este pack
-          </a>
+          <div className="space-y-2">
+            <Link
+              href={`/packages/${pkg.id}`}
+              className="w-full bg-[#6A3B76] hover:bg-[#5a2f66] text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+            >
+              Ver más detalles
+            </Link>
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+            >
+              <FaWhatsapp className="text-xl" />
+              Consulta por WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>

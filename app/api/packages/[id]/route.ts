@@ -1,6 +1,26 @@
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
-import { updatePackage, deletePackage } from "@/lib/packages"
+import { getPackageById, updatePackage, deletePackage } from "@/lib/packages"
+
+// GET - Obtener paquete por ID
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params
+    const pkg = await getPackageById(id)
+    
+    if (!pkg) {
+      return NextResponse.json({ error: "Paquete no encontrado" }, { status: 404 })
+    }
+
+    return NextResponse.json(pkg)
+  } catch (error) {
+    console.error("Error al obtener paquete:", error)
+    return NextResponse.json({ error: "Error al obtener paquete" }, { status: 500 })
+  }
+}
 
 // PUT - Actualizar paquete
 export async function PUT(
