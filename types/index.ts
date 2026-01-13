@@ -9,6 +9,19 @@ export interface Category {
   updatedAt?: string;
 }
 
+export interface Banner {
+  id: string;
+  title: string;
+  subtitle?: string;
+  imageUrl: string;
+  linkUrl?: string;
+  buttonText?: string;
+  isActive: boolean;
+  displayOrder: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface TravelPackage {
   id: string;
   title: string;

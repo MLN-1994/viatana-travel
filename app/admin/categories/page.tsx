@@ -66,25 +66,26 @@ export default function CategoriesPage() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
+        <div className="mb-6">
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg transition border border-gray-300 shadow-sm cursor-pointer"
+          >
+            ← Volver al Dashboard
+          </Link>
+        </div>
+        
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Gestión de Categorías</h1>
             <p className="text-gray-600 mt-2">Administra las categorías de paquetes turísticos</p>
           </div>
-          <div className="flex gap-4">
-            <Link
-              href="/admin"
-              className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition"
-            >
-              ← Volver al Panel
-            </Link>
-            <Link
-              href="/admin/categories/new"
-              className="px-6 py-3 bg-[#6A3B76] text-white rounded-lg hover:bg-[#5a2f66] transition"
-            >
-              + Nueva Categoría
-            </Link>
-          </div>
+          <Link
+            href="/admin/categories/new"
+            className="px-6 py-3 bg-[#6A3B76] text-white rounded-lg hover:bg-[#5a2f66] transition"
+          >
+            + Nueva Categoría
+          </Link>
         </div>
 
         {/* Table */}

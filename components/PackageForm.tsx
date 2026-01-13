@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { TravelPackage, Category } from "@/types"
-import { FaArrowLeft } from "react-icons/fa"
 
 interface PackageFormProps {
   packageId?: string
@@ -95,46 +94,31 @@ export default function PackageForm({ packageId }: PackageFormProps) {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-purple-50 to-gray-100 relative">
-      {/* Decoraciones de fondo */}
-      <div className="absolute inset-0 opacity-5 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 text-[#6A3B76] text-8xl">✈️</div>
-        <div className="absolute bottom-10 right-20 text-[#6A3B76] text-7xl">🌍</div>
-        <div className="absolute top-1/3 right-10 text-[#6A3B76] text-6xl">🏔️</div>
-      </div>
-
-      {/* Header */}
-      <header className="bg-white shadow-md border-b-4 border-[#6A3B76] relative z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.push("/admin")}
-              className="p-3 hover:bg-purple-100 rounded-xl transition-all transform hover:scale-110 shadow-md bg-white border-2 border-purple-200"
-            >
-              <FaArrowLeft className="text-[#6A3B76] text-lg" />
-            </button>
-            <div className="bg-linear-to-br from-[#6A3B76] to-purple-600 p-3 rounded-xl shadow-lg">
-              <span className="text-3xl">{packageId ? "✏️" : "➕"}</span>
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-[#6A3B76]">
-                {packageId ? "✏️ Editar Paquete" : "➕ Nuevo Paquete"}
-              </h1>
-              <p className="text-gray-600 text-sm mt-1">
-                📝 Complete los datos del paquete turístico
-              </p>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="mb-6">
+          <button
+            onClick={() => router.push("/admin")}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg transition border border-gray-300 shadow-sm cursor-pointer"
+          >
+            ← Volver al Dashboard
+          </button>
         </div>
-      </header>
+        
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">
+            {packageId ? "Editar Paquete" : "Nuevo Paquete"}
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Complete los datos del paquete turístico
+          </p>
+        </div>
 
-      {/* Form */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-8 space-y-6 border-t-4 border-[#6A3B76]">
+        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-8 space-y-6">
           {/* Título */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <span className="text-[#6A3B76]">📦</span> Título *
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Título *
             </label>
             <input
               type="text"
@@ -148,8 +132,8 @@ export default function PackageForm({ packageId }: PackageFormProps) {
 
           {/* Destino */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <span className="text-[#6A3B76]">📍</span> Destino *
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Destino *
             </label>
             <input
               type="text"
@@ -163,8 +147,8 @@ export default function PackageForm({ packageId }: PackageFormProps) {
 
           {/* Descripción */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <span className="text-[#6A3B76]">📝</span> Descripción *
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Descripción *
             </label>
             <textarea
               required
@@ -178,8 +162,8 @@ export default function PackageForm({ packageId }: PackageFormProps) {
 
           {/* Categoría */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <span className="text-[#6A3B76]">🏷️</span> Categoría *
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Categoría *
             </label>
             <select
               required
@@ -198,8 +182,8 @@ export default function PackageForm({ packageId }: PackageFormProps) {
 
           {/* Duración */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <span className="text-[#6A3B76]">⏱️</span> Duración *
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Duración *
             </label>
             <input
               type="text"
@@ -214,8 +198,8 @@ export default function PackageForm({ packageId }: PackageFormProps) {
           {/* Precio */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <span className="text-[#6A3B76]">💰</span> Precio *
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Precio *
               </label>
               <input
                 type="number"
@@ -228,8 +212,8 @@ export default function PackageForm({ packageId }: PackageFormProps) {
             </div>
 
             <div>
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <span className="text-[#6A3B76]">💵</span> Precio Original
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Precio Original
               </label>
               <input
                 type="number"
@@ -242,23 +226,23 @@ export default function PackageForm({ packageId }: PackageFormProps) {
           </div>
 
           {/* Oferta */}
-          <div className="bg-linear-to-r from-red-50 to-orange-50 p-5 rounded-xl border-2 border-red-200">
+          <div className="bg-gray-50 p-5 rounded-lg border border-gray-200">
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={formData.isOffer}
                 onChange={(e) => setFormData({ ...formData, isOffer: e.target.checked })}
-                className="w-6 h-6 text-[#6A3B76] rounded focus:ring-2 focus:ring-[#6A3B76]"
+                className="w-5 h-5 text-[#6A3B76] rounded focus:ring-2 focus:ring-[#6A3B76]"
               />
-              <span className="text-sm font-bold text-gray-800 flex items-center gap-2">
-                <span className="text-xl">🔥</span> Este paquete es una oferta especial
+              <span className="text-sm font-medium text-gray-800">
+                Este paquete es una oferta especial
               </span>
             </label>
 
             {formData.isOffer && (
               <div className="mt-4">
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <span className="text-red-600">%</span> Porcentaje de descuento
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Porcentaje de descuento
                 </label>
                 <input
                   type="number"
@@ -273,8 +257,8 @@ export default function PackageForm({ packageId }: PackageFormProps) {
 
           {/* Imagen URL */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <span className="text-[#6A3B76]">🖼️</span> URL de la Imagen *
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              URL de la Imagen *
             </label>
             <input
               type="url"
@@ -292,9 +276,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
           </div>
 
           {/* Incluye */}
-          <div className="bg-blue-50 p-5 rounded-xl border-2 border-blue-200">
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
-              <span className="text-[#6A3B76]">✅</span> ¿Qué incluye el paquete? *
+          <div className="bg-gray-50 p-5 rounded-lg border border-gray-200">
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              ¿Qué incluye el paquete? *
             </label>
             <div className="space-y-3">
               {(formData.included || [""]).map((item, index) => (
@@ -365,7 +349,7 @@ export default function PackageForm({ packageId }: PackageFormProps) {
             </button>
           </div>
         </form>
-      </main>
+      </div>
     </div>
   )
 }

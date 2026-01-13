@@ -87,10 +87,10 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         {/* Quick Links */}
-        <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
           <button
             onClick={() => router.push('/admin/packages/new')}
-            className="bg-white rounded-xl shadow-md p-6 border-l-4 border-[#6A3B76] hover:shadow-lg transition text-left"
+            className="bg-white rounded-xl shadow-md p-6 border-l-4 border-[#6A3B76] hover:shadow-lg transition text-left cursor-pointer transform hover:scale-105"
           >
             <div className="flex items-center gap-4">
               <div className="bg-[#6A3B76] p-3 rounded-lg">
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
           
           <button
             onClick={() => router.push('/admin/categories')}
-            className="bg-white rounded-xl shadow-md p-6 border-l-4 border-indigo-500 hover:shadow-lg transition text-left"
+            className="bg-white rounded-xl shadow-md p-6 border-l-4 border-indigo-500 hover:shadow-lg transition text-left cursor-pointer transform hover:scale-105"
           >
             <div className="flex items-center gap-4">
               <div className="bg-indigo-500 p-3 rounded-lg">
@@ -114,6 +114,21 @@ export default function AdminDashboard() {
               <div>
                 <h3 className="text-lg font-bold text-gray-800">Categorías</h3>
                 <p className="text-sm text-gray-500">Gestionar categorías</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => router.push('/admin/banners')}
+            className="bg-white rounded-xl shadow-md p-6 border-l-4 border-pink-500 hover:shadow-lg transition text-left cursor-pointer transform hover:scale-105"
+          >
+            <div className="flex items-center gap-4">
+              <div className="bg-pink-500 p-3 rounded-lg">
+                <span className="text-2xl">🎨</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">Banners</h3>
+                <p className="text-sm text-gray-500">Gestionar carousel</p>
               </div>
             </div>
           </button>
