@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import ConditionalLayout from "@/components/ConditionalLayout";
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -24,11 +23,9 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${lexend.variable} font-sans antialiased`}>
         <div className="min-h-screen flex flex-col">
-          <Header />
-          <main className="flex-1">
+          <ConditionalLayout>
             {children}
-          </main>
-          <Footer />
+          </ConditionalLayout>
         </div>
       </body>
     </html>

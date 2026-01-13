@@ -1,11 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { contactInfo } from '@/data/packages';
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith('/admin');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -217,16 +220,18 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Floating WhatsApp button */}
-      <a
-        href={`https://wa.me/${contactInfo.whatsapp}?text=Hola! Me gustaría recibir información sobre sus paquetes de viaje`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 md:w-16 md:h-16 shadow-2xl transition-all hover:scale-110 z-50 flex items-center justify-center"
-        title="Contáctanos por WhatsApp"
-      >
-        <FaWhatsapp className="text-2xl md:text-3xl" />
-      </a>
+      {/* Floating WhatsApp button - Solo visible en páginas públicas */}
+      {!isAdminRoute && (
+        <a
+          href={`https://wa.me/${contactInfo.whatsapp}?text=Hola! Me gustaría recibir información sobre sus paquetes de viaje`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-4 right-4 md:bottom-6 md:right-6 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 md:w-16 md:h-16 shadow-2xl transition-all hover:scale-110 z-50 flex items-center justify-center"
+          title="Contáctanos por WhatsApp"
+        >
+          <FaWhatsapp className="text-2xl md:text-3xl" />
+        </a>
+      )}
     </footer>
   );
 }
