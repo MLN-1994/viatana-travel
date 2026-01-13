@@ -1,3 +1,14 @@
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  icon?: string;
+  displayOrder: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface TravelPackage {
   id: string;
   title: string;
@@ -10,7 +21,8 @@ export interface TravelPackage {
   originalPrice?: number;
   discount?: number;
   included: string[];
-  category: 'nacional' | 'europa' | 'centroamerica' | 'mundial' | 'sudamerica';
+  category: string; // Ahora es string dinámico en lugar de union type fijo
+  categoryId?: string; // Opcional: ID de la categoría para relación futura
 }
 
 export interface Offer extends TravelPackage {

@@ -2,35 +2,41 @@
 
 import { useState, useEffect } from 'react';
 import PackageCard from './PackageCard';
-import { TravelPackage } from '@/types';
+import { TravelPackage, Category } from '@/types';
 
 export default function PackagesGrid() {
   const [filter, setFilter] = useState<string>('all');
   const [travelPackages, setTravelPackages] = useState<TravelPackage[]>([]);
+  const [categories, setCategories] = useState<{ id: string; label: string }[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/packages')
-      .then(res => res.json())
-      .then(data => {
-        setTravelPackages(data);
+    // Cargar paquetes y categorías en paralelo
+    Promise.all([
+      fetch('/api/packages').then(res => res.json()),
+      fetch('/api/categories').then(res => res.json())
+    ])
+      .then(([packagesData, categoriesData]) => {
+        setTravelPackages(packagesData);
+        
+        // Construir array de categorías con formato para los botones
+        const categoryButtons = [
+          { id: 'all', label: '🌍 Todos' },
+          { id: 'ofertas', label: '🔥 Ofertas' },
+          ...categoriesData.map((cat: Category) => ({
+            id: cat.slug,
+            label: `${cat.icon || '📁'} ${cat.name}`
+          }))
+        ];
+        
+        setCategories(categoryButtons);
         setLoading(false);
       })
       .catch(err => {
-        console.error('Error al cargar paquetes:', err);
+        console.error('Error al cargar datos:', err);
         setLoading(false);
       });
   }, []);
-
-  const categories = [
-    { id: 'all', label: '🌍 Todos' },
-    { id: 'ofertas', label: '🔥 Ofertas' },
-    { id: 'mundial', label: '⚽ Mundial 2026' },
-    { id: 'nacional', label: '🇦🇷 Nacional' },
-    { id: 'europa', label: '🏰 Europa' },
-    { id: 'centroamerica', label: '🌴 Centroamérica' },
-    { id: 'sudamerica', label: '🗻 Sudamérica' },
-  ];
 
   const filteredPackages = filter === 'all' 
     ? travelPackages 

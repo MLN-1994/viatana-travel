@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { TravelPackage } from "@/types"
+import { TravelPackage, Category } from "@/types"
 import { FaArrowLeft } from "react-icons/fa"
 
 interface PackageFormProps {
@@ -13,6 +13,7 @@ export default function PackageForm({ packageId }: PackageFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const [categories, setCategories] = useState<Category[]>([])
   const [formData, setFormData] = useState<Partial<TravelPackage>>({
     title: "",
     destination: "",
@@ -24,10 +25,16 @@ export default function PackageForm({ packageId }: PackageFormProps) {
     originalPrice: 0,
     discount: 0,
     included: [""],
-    category: "nacional"
+    category: ""
   })
 
   useEffect(() => {
+    // Cargar categorías
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => setCategories(data))
+      .catch(err => console.error('Error al cargar categorías:', err));
+    
     if (packageId) {
       // Cargar paquete existente
       fetch("/api/packages")
@@ -177,14 +184,15 @@ export default function PackageForm({ packageId }: PackageFormProps) {
             <select
               required
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value as TravelPackage['category'] })}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
             >
-              <option value="nacional">🇦🇷 Nacional</option>
-              <option value="sudamerica">🌎 Sudamérica</option>
-              <option value="centroamerica">🌎 Centroamérica</option>
-              <option value="europa">🌍 Europa</option>
-              <option value="mundial">🌏 Mundial</option>
+              <option value="">Selecciona una categoría</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.slug}>
+                  {cat.icon} {cat.name}
+                </option>
+              ))}
             </select>
           </div>
 
