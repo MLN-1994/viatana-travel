@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -21,7 +23,13 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${lexend.variable} font-sans antialiased`}>
-        {children}
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

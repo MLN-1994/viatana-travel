@@ -53,6 +53,9 @@ export default function Header() {
             <Link href="/" className="text-gray-700 hover:text-[#6A3B76] font-medium">
               Inicio
             </Link>
+            <Link href="/about" className="text-gray-700 hover:text-[#6A3B76] font-medium">
+              Sobre Nosotros
+            </Link>
             <Link href="#paquetes" className="text-gray-700 hover:text-[#6A3B76] font-medium">
               Paquetes
             </Link>
@@ -78,6 +81,9 @@ export default function Header() {
           <nav className="md:hidden pb-4 flex flex-col gap-3">
             <Link href="/" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
               Inicio
+            </Link>
+            <Link href="/about" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
+              Sobre Nosotros
             </Link>
             <Link href="#paquetes" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
               Paquetes

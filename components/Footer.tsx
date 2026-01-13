@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { contactInfo } from '@/data/packages';
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
@@ -53,7 +54,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white" id="contacto">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Company info */}
           <div>
             <h3 className="text-2xl font-bold mb-4">✈️ Viatana Travel</h3>
@@ -85,6 +86,38 @@ export default function Footer() {
                 </a>
               </p>
             </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-xl font-bold mb-4">🔗 Enlaces Rápidos</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/" className="text-gray-300 hover:text-[#6A3B76] transition">
+                  Inicio
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-gray-300 hover:text-[#6A3B76] transition">
+                  Sobre Nosotros
+                </Link>
+              </li>
+              <li>
+                <Link href="/#paquetes" className="text-gray-300 hover:text-[#6A3B76] transition">
+                  Paquetes
+                </Link>
+              </li>
+              <li>
+                <Link href="/#ofertas" className="text-gray-300 hover:text-[#6A3B76] transition">
+                  Ofertas
+                </Link>
+              </li>
+              <li>
+                <Link href="/#contacto" className="text-gray-300 hover:text-[#6A3B76] transition">
+                  Contacto
+                </Link>
+              </li>
+            </ul>
           </div>
 
           {/* Contact Form */}
