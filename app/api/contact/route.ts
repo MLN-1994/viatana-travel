@@ -56,12 +56,11 @@ Enviado desde: ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' }
     // Si tienes configurado Resend
     if (process.env.RESEND_API_KEY) {
       try {
-        // Necesitas instalar: npm install resend
         const { Resend } = await import('resend');
         const resend = new Resend(process.env.RESEND_API_KEY);
         
         await resend.emails.send({
-          from: process.env.CONTACT_EMAIL || 'contacto@viatanatravel.com',
+          from: process.env.CONTACT_EMAIL || 'onboarding@resend.dev',
           to: recipientEmail || 'contacto@viatanatravel.com',
           replyTo: email,
           subject: emailSubject,
@@ -72,7 +71,8 @@ Enviado desde: ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' }
         console.log('✅ Email enviado vía Resend');
         return NextResponse.json({ success: true, message: 'Mensaje enviado correctamente' });
       } catch (error) {
-        console.error('Error con Resend:', error);
+        console.error('⚠️ Error con Resend:', error);
+        // Continuar con el flujo normal si falla el envío
       }
     }
 
