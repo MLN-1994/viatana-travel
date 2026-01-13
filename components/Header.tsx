@@ -12,14 +12,12 @@ export default function Header() {
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4">
         {/* Top bar */}
-        <div className="flex justify-between items-center py-2 text-sm border-b">
-          <div className="flex items-center gap-4 text-gray-600">
-            <a href={`tel:${contactInfo.phone}`} className="hover:text-[#6A3B76] flex items-center gap-1">
-              <span>📞</span>
+        <div className="hidden md:flex justify-between items-center py-2 text-xs lg:text-sm border-b">
+          <div className="flex items-center gap-3 lg:gap-4 text-gray-600">
+            <a href={`tel:${contactInfo.phone}`} className="hover:text-[#6A3B76] transition">
               {contactInfo.phone}
             </a>
-            <a href={`mailto:${contactInfo.email}`} className="hover:text-[#6A3B76] hidden md:flex items-center gap-1">
-              <span>✉️</span>
+            <a href={`mailto:${contactInfo.email}`} className="hover:text-[#6A3B76] transition">
               {contactInfo.email}
             </a>
           </div>
@@ -43,26 +41,20 @@ export default function Header() {
         </div>
 
         {/* Main header */}
-        <div className="flex justify-between items-center py-4">
-          <Link href="/" className="text-2xl md:text-3xl font-bold text-[#6A3B76]">
-            ✈️ Viatana Travel
+        <div className="flex justify-between items-center py-3 md:py-4">
+          <Link href="/" className="text-xl md:text-2xl lg:text-3xl font-bold text-[#6A3B76]">
+            Viatana Travel
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-gray-700 hover:text-[#6A3B76] font-medium">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-6 text-sm lg:text-base">
+            <Link href="/" className="text-gray-700 hover:text-[#6A3B76] font-medium transition">
               Inicio
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#6A3B76] font-medium">
-              Sobre Nosotros
+            <Link href="/about" className="text-gray-700 hover:text-[#6A3B76] font-medium transition">
+              Nosotros
             </Link>
-            <Link href="#paquetes" className="text-gray-700 hover:text-[#6A3B76] font-medium">
-              Paquetes
-            </Link>
-            <Link href="#ofertas" className="text-gray-700 hover:text-[#6A3B76] font-medium">
-              Ofertas
-            </Link>
-            <Link href="#contacto" className="text-gray-700 hover:text-[#6A3B76] font-medium">
+            <Link href="#contacto" className="text-gray-700 hover:text-[#6A3B76] font-medium transition">
               Contacto
             </Link>
           </nav>
@@ -83,13 +75,7 @@ export default function Header() {
               Inicio
             </Link>
             <Link href="/about" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
-              Sobre Nosotros
-            </Link>
-            <Link href="#paquetes" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
-              Paquetes
-            </Link>
-            <Link href="#ofertas" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
-              Ofertas
+              Nosotros
             </Link>
             <Link href="#contacto" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
               Contacto

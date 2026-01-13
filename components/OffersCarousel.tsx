@@ -52,8 +52,8 @@ export default function OffersCarousel() {
   if (loading) {
     return (
       <section className="relative bg-gradient-to-r from-[#6A3B76] to-[#63768D] text-white">
-        <div className="h-[500px] md:h-[600px] flex items-center justify-center">
-          <p className="text-xl">Cargando...</p>
+        <div className="h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center">
+          <p className="text-lg md:text-xl">Cargando...</p>
         </div>
       </section>
     );
@@ -67,10 +67,10 @@ export default function OffersCarousel() {
 
   return (
     <section className="relative bg-gradient-to-r from-[#6A3B76] to-[#63768D] text-white">
-      <div className="relative w-full py-8">
+      <div className="relative w-full py-4 md:py-8">
         {/* Main carousel */}
         <div className="relative overflow-hidden shadow-2xl group">
-          <div className="relative h-[500px] md:h-[600px]">
+          <div className="relative h-[400px] md:h-[500px] lg:h-[600px]">
             <Image
               src={currentBanner.imageUrl}
               alt={currentBanner.title}
@@ -80,16 +80,16 @@ export default function OffersCarousel() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
             
-            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-              <h3 className="text-3xl md:text-5xl font-bold mb-4">{currentBanner.title}</h3>
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-12">
+              <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">{currentBanner.title}</h3>
               {currentBanner.subtitle && (
-                <p className="text-lg md:text-xl mb-6 max-w-3xl">{currentBanner.subtitle}</p>
+                <p className="text-base md:text-lg lg:text-xl mb-4 md:mb-6 max-w-3xl">{currentBanner.subtitle}</p>
               )}
               
               {currentBanner.buttonText && currentBanner.linkUrl && (
                 <Link
                   href={currentBanner.linkUrl}
-                  className="inline-block bg-white text-[#6A3B76] hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition text-lg"
+                  className="inline-block bg-white text-[#6A3B76] hover:bg-gray-100 font-semibold py-2.5 md:py-3 px-6 md:px-8 rounded-lg transition text-sm md:text-base lg:text-lg"
                 >
                   {currentBanner.buttonText}
                 </Link>

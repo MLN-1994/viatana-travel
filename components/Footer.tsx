@@ -53,34 +53,31 @@ export default function Footer() {
 
   return (
     <footer className="bg-gray-900 text-white" id="contacto">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div className="container mx-auto px-4 py-8 md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8">
           {/* Company info */}
           <div>
-            <h3 className="text-2xl font-bold mb-4">✈️ Viatana Travel</h3>
-            <p className="text-gray-300 mb-4">
-              Tu agencia de viajes de confianza. Creamos experiencias inolvidables en los destinos más increíbles.
+            <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Viatana Travel</h3>
+            <p className="text-gray-300 text-sm md:text-base mb-3 md:mb-4">
+              Tu agencia de viajes de confianza.
             </p>
-            <div className="space-y-2 text-gray-300">
-              <p className="flex items-center gap-2">
-                <span>📞</span>
-                <a href={`tel:${contactInfo.phone}`} className="hover:text-[#6A3B76]">
+            <div className="space-y-2 text-gray-300 text-sm">
+              <p>
+                <a href={`tel:${contactInfo.phone}`} className="hover:text-[#6A3B76] transition">
                   {contactInfo.phone}
                 </a>
               </p>
-              <p className="flex items-center gap-2">
-                <span>✉️</span>
-                <a href={`mailto:${contactInfo.email}`} className="hover:text-[#6A3B76]">
+              <p>
+                <a href={`mailto:${contactInfo.email}`} className="hover:text-[#6A3B76] transition">
                   {contactInfo.email}
                 </a>
               </p>
-              <p className="flex items-center gap-2">
-                <span>💬</span>
+              <p>
                 <a 
                   href={`https://wa.me/${contactInfo.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-green-400"
+                  className="hover:text-green-400 transition"
                 >
                   WhatsApp
                 </a>
@@ -90,8 +87,8 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xl font-bold mb-4">🔗 Enlaces Rápidos</h4>
-            <ul className="space-y-2">
+            <h4 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Enlaces Rápidos</h4>
+            <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/" className="text-gray-300 hover:text-[#6A3B76] transition">
                   Inicio
@@ -99,17 +96,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/about" className="text-gray-300 hover:text-[#6A3B76] transition">
-                  Sobre Nosotros
-                </Link>
-              </li>
-              <li>
-                <Link href="/#paquetes" className="text-gray-300 hover:text-[#6A3B76] transition">
-                  Paquetes
-                </Link>
-              </li>
-              <li>
-                <Link href="/#ofertas" className="text-gray-300 hover:text-[#6A3B76] transition">
-                  Ofertas
+                  Nosotros
                 </Link>
               </li>
               <li>
@@ -122,11 +109,11 @@ export default function Footer() {
 
           {/* Contact Form */}
           <div>
-            <h4 className="text-xl font-bold mb-4">📧 Contáctanos</h4>
-            <p className="text-gray-300 mb-4">
-              Envíanos tu consulta y te responderemos lo antes posible
+            <h4 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Contáctanos</h4>
+            <p className="text-gray-300 text-sm mb-3 md:mb-4">
+              Envíanos tu consulta
             </p>
-            <form onSubmit={handleContactSubmit} className="space-y-3">
+            <form onSubmit={handleContactSubmit} className="space-y-2 md:space-y-3">
               <input
                 type="text"
                 name="name"
@@ -134,24 +121,24 @@ export default function Footer() {
                 onChange={handleInputChange}
                 placeholder="Tu nombre"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
+                className="w-full px-3 md:px-4 py-2 text-sm rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
               />
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="Tu correo electrónico"
+                placeholder="Tu correo"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
+                className="w-full px-3 md:px-4 py-2 text-sm rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
               />
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                placeholder="Tu teléfono (opcional)"
-                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
+                placeholder="Teléfono (opcional)"
+                className="w-full px-3 md:px-4 py-2 text-sm rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400"
               />
               <textarea
                 name="message"
@@ -160,12 +147,12 @@ export default function Footer() {
                 placeholder="Tu mensaje"
                 required
                 rows={3}
-                className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400 resize-none"
+                className="w-full px-3 md:px-4 py-2 text-sm rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#6A3B76] text-white placeholder-gray-400 resize-none"
               />
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#6A3B76] hover:bg-[#5a2f66] text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#6A3B76] hover:bg-[#5a2f66] text-white font-semibold py-2.5 md:py-3 px-6 text-sm rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
               </button>
@@ -235,10 +222,10 @@ export default function Footer() {
         href={`https://wa.me/${contactInfo.whatsapp}?text=Hola! Me gustaría recibir información sobre sus paquetes de viaje`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full w-16 h-16 shadow-2xl transition-all transform hover:scale-110 z-50 flex items-center justify-center"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 md:w-16 md:h-16 shadow-2xl transition-all hover:scale-110 z-50 flex items-center justify-center"
         title="Contáctanos por WhatsApp"
       >
-        <FaWhatsapp className="text-3xl" />
+        <FaWhatsapp className="text-2xl md:text-3xl" />
       </a>
     </footer>
   );

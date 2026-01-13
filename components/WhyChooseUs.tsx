@@ -37,31 +37,30 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-12 md:py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            ¿Por Qué Elegir Viatana Travel?
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 md:mb-4">
+            ¿Por Qué Elegirnos?
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            Somos más que una agencia de viajes. Somos tu compañero de aventuras, 
-            comprometidos con hacer realidad tus sueños de viaje.
+          <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base lg:text-lg">
+            Tu compañero de aventuras comprometido con hacer realidad tus sueños de viaje.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="bg-gray-50 rounded-xl p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center"
+              className="bg-gray-50 rounded-xl p-5 md:p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center"
             >
-              <div className="text-[#6A3B76] mb-4 flex justify-center">
+              <div className="text-[#6A3B76] mb-3 md:mb-4 flex justify-center">
                 {benefit.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
+              <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2 md:mb-3">
                 {benefit.title}
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm md:text-base text-gray-600">
                 {benefit.description}
               </p>
             </div>
@@ -69,22 +68,22 @@ export default function WhyChooseUs() {
         </div>
 
         {/* Stats section */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="mt-12 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
           <div>
-            <div className="text-4xl font-bold text-[#6A3B76] mb-2">+10</div>
-            <div className="text-gray-600">Años de Experiencia</div>
+            <div className="text-3xl md:text-4xl font-bold text-[#6A3B76] mb-1 md:mb-2">+10</div>
+            <div className="text-xs md:text-sm text-gray-600">Años</div>
           </div>
           <div>
-            <div className="text-4xl font-bold text-[#6A3B76] mb-2">+5000</div>
-            <div className="text-gray-600">Viajeros Felices</div>
+            <div className="text-3xl md:text-4xl font-bold text-[#6A3B76] mb-1 md:mb-2">+5000</div>
+            <div className="text-xs md:text-sm text-gray-600">Viajeros</div>
           </div>
           <div>
-            <div className="text-4xl font-bold text-[#6A3B76] mb-2">+50</div>
-            <div className="text-gray-600">Destinos</div>
+            <div className="text-3xl md:text-4xl font-bold text-[#6A3B76] mb-1 md:mb-2">+50</div>
+            <div className="text-xs md:text-sm text-gray-600">Destinos</div>
           </div>
           <div>
-            <div className="text-4xl font-bold text-[#6A3B76] mb-2">98%</div>
-            <div className="text-gray-600">Satisfacción</div>
+            <div className="text-3xl md:text-4xl font-bold text-[#6A3B76] mb-1 md:mb-2">98%</div>
+            <div className="text-xs md:text-sm text-gray-600">Satisfacción</div>
           </div>
         </div>
       </div>
