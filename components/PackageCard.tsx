@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { TravelPackage } from '@/types';
@@ -12,8 +11,6 @@ interface PackageCardProps {
 }
 
 export default function PackageCard({ package: pkg }: PackageCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const whatsappMessage = `Hola! Estoy interesado en el paquete: ${pkg.title} - ${pkg.destination}. Me gustaría recibir más información.`;
   const whatsappLink = `https://wa.me/${contactInfo.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
@@ -49,35 +46,13 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
         <p className="text-gray-600 mb-3 flex items-center gap-1.5 text-sm">
           <span>📍</span> {pkg.destination}
         </p>
-        <p className="text-gray-700 mb-3 text-sm line-clamp-2 min-h-[2.5rem]">{pkg.description}</p>
+        <p className="text-gray-700 mb-4 text-sm line-clamp-2 min-h-[2.5rem]">{pkg.description}</p>
 
-        <div className="flex items-center justify-between mb-3 text-sm text-gray-600">
+        <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
           <span className="flex items-center gap-1">
             <span>⏱️</span> {pkg.duration}
           </span>
         </div>
-
-        {/* Included items */}
-        {isExpanded && (
-          <div className="mb-3 p-3 bg-gray-50 rounded-lg">
-            <h4 className="font-semibold text-gray-800 mb-2 text-sm">✅ Incluye:</h4>
-            <ul className="space-y-1 text-xs text-gray-600">
-              {pkg.included.map((item, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <span className="text-green-500 mt-0.5">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="text-[#6A3B76] text-sm font-medium mb-3 hover:underline text-left"
-        >
-          {isExpanded ? '▲ Ver menos' : '▼ Ver qué incluye'}
-        </button>
 
         {/* Price section */}
         <div className="border-t pt-4 mt-auto">

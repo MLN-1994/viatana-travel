@@ -107,12 +107,12 @@ export default function PackagesCarousel() {
             No hay paquetes disponibles en esta categoría
           </div>
         ) : (
-          <div className="relative md:px-16">
-            {/* Botón anterior */}
+          <div className="relative md:px-16 min-h-[600px]">
+            {/* Botón anterior - posición fija */}
             {filteredPackages.length > 3 && (
               <button
                 onClick={() => scroll('left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-[#6A3B76] hover:text-white text-gray-800 p-4 rounded-full shadow-xl transition-all cursor-pointer border-2 border-gray-200 hidden md:flex items-center justify-center"
+                className="absolute left-0 top-[250px] -translate-y-1/2 z-10 bg-white hover:bg-[#6A3B76] hover:text-white text-gray-800 p-4 rounded-full shadow-xl transition-all cursor-pointer border-2 border-gray-200 hidden md:flex items-center justify-center"
                 aria-label="Anterior"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -137,11 +137,11 @@ export default function PackagesCarousel() {
               ))}
             </div>
 
-            {/* Botón siguiente */}
+            {/* Botón siguiente - posición fija */}
             {filteredPackages.length > 3 && (
               <button
                 onClick={() => scroll('right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-[#6A3B76] hover:text-white text-gray-800 p-4 rounded-full shadow-xl transition-all cursor-pointer border-2 border-gray-200 hidden md:flex items-center justify-center"
+                className="absolute right-0 top-[250px] -translate-y-1/2 z-10 bg-white hover:bg-[#6A3B76] hover:text-white text-gray-800 p-4 rounded-full shadow-xl transition-all cursor-pointer border-2 border-gray-200 hidden md:flex items-center justify-center"
                 aria-label="Siguiente"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

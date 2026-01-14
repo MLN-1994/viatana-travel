@@ -6,8 +6,6 @@ import Image from 'next/image';
 import { TravelPackage } from '@/types';
 import { contactInfo } from '@/data/packages';
 import { FaWhatsapp, FaArrowLeft, FaClock, FaMapMarkerAlt, FaCheckCircle } from 'react-icons/fa';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 export default function PackageDetailPage() {
   const params = useParams();
@@ -61,11 +59,9 @@ export default function PackageDetailPage() {
   const whatsappLink = `https://wa.me/${contactInfo.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <div className="flex-1 bg-gradient-to-b from-purple-50 to-white">
-        {/* Header Section */}
-        <div className="relative h-[400px] md:h-[500px] w-full">
+    <div className="flex-1 bg-gradient-to-b from-purple-50 to-white">
+      {/* Header Section */}
+      <div className="relative h-[400px] md:h-[500px] w-full">
         <Image
           src={pkg.image}
           alt={pkg.title}
@@ -214,8 +210,6 @@ export default function PackageDetailPage() {
               </div>
             </div>
           </div>
-      </div>
-      <Footer />
         </div>
       </div>
     </div>
