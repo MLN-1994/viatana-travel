@@ -53,8 +53,8 @@ export interface ContactInfo {
   twitter?: string;
 }
 
-// Extensión de tipos para NextAuth
-import { DefaultSession } from "next-auth"
+// Extensión de tipos para NextAuth v5
+import type { DefaultSession } from "next-auth"
 
 declare module "next-auth" {
   interface Session {
@@ -65,13 +65,6 @@ declare module "next-auth" {
   }
 
   interface User {
-    role: string
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    id: string
     role: string
   }
 }
