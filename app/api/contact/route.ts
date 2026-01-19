@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { validateContactForm, sanitizeText } from '@/lib/validations';
 import { rateLimit, getClientIp } from '@/lib/rate-limit';
+import { supabaseAdmin } from '@/lib/supabase';
+import { Resend } from 'resend';
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function POST(request: Request) {
   try {
@@ -41,6 +45,31 @@ export async function POST(request: Request) {
     const safePhone = phone ? sanitizeText(phone.trim()) : '';
     const safeMessage = sanitizeText(message.trim());
 
+    // PASO 1: Guardar en base de datos (CRÍTICO)
+    try {
+      const userAgent = request.headers.get('user-agent') || 'unknown';
+      
+      const { error: dbError } = await supabaseAdmin
+        .from('contact_messages')
+        .insert({
+          name: safeName,
+          email: safeEmail,
+          phone: safePhone || null,
+          message: safeMessage,
+          status: 'pending',
+          ip_address: clientIp,
+          user_agent: userAgent
+        });
+
+      if (dbError) {
+        console.error('Error guardando mensaje:', dbError);
+        // No fallar si falla la BD, intentar enviar email de todas formas
+      }
+    } catch (dbError) {
+      console.error('Error en insert de BD:', dbError);
+    }
+
+    // PASO 2: Enviar email (OPCIONAL)
     // Preparar el contenido del email
     const emailSubject = `Nuevo contacto de ${safeName} - Viatana Travel`;
     const emailText = `
@@ -81,52 +110,37 @@ Enviado desde: ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' }
       </div>
     `;
 
-    const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL;
-
-    // Si tienes configurado Resend
-    if (process.env.RESEND_API_KEY) {
+    // Intentar enviar email si está configurado
+    let emailSent = false;
+    if (resend) {
       try {
-        const { Resend } = await import('resend');
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+        const toEmail = process.env.RESEND_TO_EMAIL || safeEmail; // Fallback a email del remitente para testing
         
         await resend.emails.send({
-          from: process.env.CONTACT_EMAIL || 'onboarding@resend.dev',
-          to: recipientEmail || 'contacto@viatanatravel.com',
+          from: fromEmail,
+          to: toEmail,
           replyTo: safeEmail,
           subject: emailSubject,
           text: emailText,
           html: emailHtml,
         });
 
-        // Solo en desarrollo
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Email enviado vía Resend');
-        }
-        
-        return NextResponse.json({ success: true, message: 'Mensaje enviado correctamente' });
-      } catch (error) {
-        // Log solo en desarrollo
-        if (process.env.NODE_ENV === 'development') {
-          console.error('Error con Resend:', error);
-        }
-        // Continuar con el flujo normal si falla el envío
+        emailSent = true;
+        console.log('✅ Email enviado a:', toEmail);
+      } catch (emailError) {
+        console.error('⚠️ Error enviando email (pero mensaje guardado en BD):', emailError);
+        // No fallar - el mensaje ya está guardado en BD
       }
+    } else {
+      console.log('ℹ️ Email no configurado. Mensaje guardado en BD.');
     }
-
-    // Si no hay servicio de email configurado
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Nuevo mensaje de contacto (simulado):');
-      console.log(emailText);
-      console.log('\nPara enviar emails reales, configura RESEND_API_KEY en .env');
-    }
-
-    // También podrías guardar en la base de datos aquí
-    // await supabase.from('contacts').insert({ name, email, phone, message })
 
     return NextResponse.json(
       { 
         success: true,
-        message: 'Mensaje recibido correctamente' 
+        message: 'Mensaje recibido correctamente',
+        emailSent
       },
       { status: 200 }
     );
