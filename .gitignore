@@ -43,3 +43,8 @@ next-env.d.ts
 # Business documents (private)
 PRESUPUESTO*.md
 CONTACT_SETUP.md
+
+# Security and credentials (NEVER COMMIT)
+CREDENTIALS_TEMP.md
+**/admin-passwords*.txt
+**/credentials*.md

@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "auth:setup": "node scripts/setup-auth.js",
+    "auth:validate": "node scripts/validate-auth.js",
+    "auth:secret": "node scripts/generate-auth-secret.js",
+    "auth:hash": "node scripts/hash-passwords.js",
+    "supabase:setup": "node scripts/setup-supabase.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.86.0",
