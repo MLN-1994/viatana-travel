@@ -109,70 +109,89 @@ export default function AdminBannersPage() {
             </Link>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Orden
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Título
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Subtítulo
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Estado
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {banners.map((banner) => (
-                  <tr key={banner.id} className={!banner.isActive ? 'bg-gray-50 opacity-60' : ''}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {banner.displayOrder}
-                    </td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                      {banner.title}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                      {banner.subtitle || '-'}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <button
-                        onClick={() => toggleActive(banner.id, banner.isActive)}
-                        className={`px-3 py-1 rounded-full text-xs font-medium cursor-pointer transition-transform hover:scale-105 ${
-                          banner.isActive
-                            ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                            : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                        }`}
-                      >
-                        {banner.isActive ? 'Activo' : 'Inactivo'}
-                      </button>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <Link
-                        href={`/admin/banners/${banner.id}/edit`}
-                        className="text-indigo-600 hover:text-indigo-900 mr-4"
-                      >
-                        Editar
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(banner.id, banner.title)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        Eliminar
-                      </button>
-                    </td>
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden md:block bg-white rounded-lg shadow overflow-hidden">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orden</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtítulo</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {banners.map((banner) => (
+                    <tr key={banner.id} className={!banner.isActive ? 'bg-gray-50 opacity-60' : ''}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{banner.displayOrder}</td>
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">{banner.title}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">{banner.subtitle || '-'}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button
+                          onClick={() => toggleActive(banner.id, banner.isActive)}
+                          className={`px-3 py-1 rounded-full text-xs font-medium cursor-pointer transition-transform hover:scale-105 ${banner.isActive ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+                        >
+                          {banner.isActive ? 'Activo' : 'Inactivo'}
+                        </button>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <Link
+                          href={`/admin/banners/${banner.id}/edit`}
+                          className="text-indigo-600 hover:text-indigo-900 mr-4"
+                        >
+                          Editar
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(banner.id, banner.title)}
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* Mobile Card View */}
+            <div className="md:hidden divide-y divide-gray-200 bg-white rounded-lg shadow overflow-hidden">
+              {banners.map((banner) => (
+                <div key={banner.id} className={`p-4 ${!banner.isActive ? 'bg-gray-50 opacity-60' : ''}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-base">{banner.title}</h3>
+                      <span className="text-xs text-gray-500">Orden: {banner.displayOrder}</span>
+                    </div>
+                    <button
+                      onClick={() => toggleActive(banner.id, banner.isActive)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium cursor-pointer transition-transform hover:scale-105 ${banner.isActive ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+                    >
+                      {banner.isActive ? 'Activo' : 'Inactivo'}
+                    </button>
+                  </div>
+                  {banner.subtitle && (
+                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">{banner.subtitle}</p>
+                  )}
+                  <div className="flex gap-2 pt-2 border-t border-gray-100 mt-2">
+                    <Link
+                      href={`/admin/banners/${banner.id}/edit`}
+                      className="flex-1 text-center text-indigo-600 hover:text-indigo-900 px-4 py-2 border border-indigo-600 rounded-lg hover:bg-indigo-50 transition text-sm font-medium"
+                    >
+                      ✏️ Editar
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(banner.id, banner.title)}
+                      className="flex-1 text-red-600 hover:text-red-900 px-4 py-2 border border-red-600 rounded-lg hover:bg-red-50 transition text-sm font-medium"
+                    >
+                      🗑️ Eliminar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>

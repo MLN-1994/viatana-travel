@@ -320,18 +320,18 @@ export default function PackageForm({ packageId }: PackageFormProps) {
           )}
 
           {/* Botones */}
-          <div className="flex gap-4 pt-6 border-t-2 border-gray-200">
+          <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t-2 border-gray-200">
             <button
               type="button"
               onClick={() => router.push("/admin")}
-              className="flex-1 px-6 py-4 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-all font-bold transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full sm:w-auto px-6 py-4 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-all font-bold transform hover:scale-[1.02] active:scale-[0.98]"
             >
               ❌ Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-linear-to-r from-[#6A3B76] to-purple-600 text-white rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 bg-linear-to-r from-[#6A3B76] to-purple-600 text-white rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
             >
               {loading ? (
                 <>

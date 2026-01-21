@@ -62,12 +62,18 @@ export default function NewBannerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 max-w-2xl">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Crear Nuevo Banner</h1>
-        <p className="text-gray-600 mb-8">Agrega un nuevo banner al carousel principal</p>
+    <div className="min-h-screen bg-gray-50 py-8 flex items-center justify-center">
+      <div className="w-full max-w-lg lg:max-w-2xl mx-auto px-2 sm:px-4">
+        {/* Botón volver arriba */}
+        <div className="mb-6">
+          <Link href="/admin/banners" className="text-[#6A3B76] hover:underline mb-4 inline-block">
+            ← Volver a banners
+          </Link>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 text-center">Crear Nuevo Banner</h1>
+        <p className="text-gray-600 mb-8 text-center">Agrega un nuevo banner al carousel principal</p>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-4 sm:p-6 space-y-6">
           {/* Título */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
@@ -191,17 +197,17 @@ export default function NewBannerPage() {
           </div>
 
           {/* Botones */}
-          <div className="flex gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-[#6A3B76] hover:bg-[#5a2f66] text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50"
+              className="w-full sm:w-auto bg-[#6A3B76] hover:bg-[#5a2f66] text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50"
             >
               {isSubmitting ? 'Creando...' : 'Crear Banner'}
             </button>
             <Link
               href="/admin/banners"
-              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition text-center"
+              className="w-full sm:w-auto bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition text-center"
             >
               Cancelar
             </Link>
