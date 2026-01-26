@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { getCategories, addCategory } from "@/lib/categories"
+import { categorySchema } from "@/lib/validations/category"
 
 // GET - Obtener todas las categorías (público)
 export async function GET() {
@@ -23,7 +24,14 @@ export async function POST(request: Request) {
 
   try {
     const newCategoryData = await request.json()
-    const newCategory = await addCategory(newCategoryData)
+    const parseResult = categorySchema.safeParse(newCategoryData)
+    if (!parseResult.success) {
+      return NextResponse.json({
+        error: "Datos inválidos",
+        details: parseResult.error.flatten()
+      }, { status: 400 })
+    }
+    const newCategory = await addCategory(parseResult.data)
     return NextResponse.json(newCategory, { status: 201 })
   } catch (error) {
     console.error("Error al crear categoría:", error)

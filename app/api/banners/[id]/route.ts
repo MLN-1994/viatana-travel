@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getBannerById, updateBanner, deleteBanner } from '@/lib/banners';
 import { auth } from '@/lib/auth';
+import { bannerUpdateSchema } from "@/lib/validations/banner";
 
 // GET /api/banners/[id] - Obtener banner por ID
 export async function GET(
@@ -35,26 +36,28 @@ export async function PUT(
 ) {
   try {
     const session = await auth();
-    
     if (!session) {
       return NextResponse.json(
         { error: 'No autorizado' },
         { status: 401 }
       );
     }
-
     const { id } = await params;
     const body = await request.json();
-
-    const updatedBanner = await updateBanner(id, body);
-
+    const parseResult = bannerUpdateSchema.safeParse(body);
+    if (!parseResult.success) {
+      return NextResponse.json({
+        error: "Datos inválidos",
+        details: parseResult.error.flatten()
+      }, { status: 400 });
+    }
+    const updatedBanner = await updateBanner(id, parseResult.data);
     if (!updatedBanner) {
       return NextResponse.json(
         { error: 'Error al actualizar banner' },
         { status: 500 }
       );
     }
-
     return NextResponse.json(updatedBanner);
   } catch (error) {
     console.error('Error updating banner:', error);
@@ -72,14 +75,12 @@ export async function DELETE(
 ) {
   try {
     const session = await auth();
-    
     if (!session) {
       return NextResponse.json(
         { error: 'No autorizado' },
         { status: 401 }
       );
     }
-
     const { id } = await params;
     const success = await deleteBanner(id);
 

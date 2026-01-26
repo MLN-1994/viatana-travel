@@ -26,6 +26,7 @@ export default function PackageForm({ packageId }: PackageFormProps) {
     included: [""],
     category: ""
   })
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({})
 
   useEffect(() => {
     // Cargar categorías
@@ -53,22 +54,28 @@ export default function PackageForm({ packageId }: PackageFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+    setFieldErrors({})
     setLoading(true)
 
     try {
       const url = packageId ? `/api/packages/${packageId}` : "/api/packages"
       const method = packageId ? "PUT" : "POST"
-
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       })
-
       if (!response.ok) {
+        // Intentar parsear detalles de error de validación
+        const data = await response.json()
+        if (response.status === 400 && data.details && data.details.fieldErrors) {
+          setFieldErrors(data.details.fieldErrors)
+          setError("Corrige los errores en el formulario.")
+          setLoading(false)
+          return
+        }
         throw new Error("Error al guardar el paquete")
       }
-
       router.push("/admin")
       router.refresh()
     } catch {
@@ -128,6 +135,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
               placeholder="Ej: Machu Picchu Clásico"
             />
+            {fieldErrors.title && fieldErrors.title.map((msg, i) => (
+              <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
+            ))}
           </div>
 
           {/* Destino */}
@@ -143,6 +153,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
               placeholder="Ej: Cusco, Perú"
             />
+            {fieldErrors.destination && fieldErrors.destination.map((msg, i) => (
+              <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
+            ))}
           </div>
 
           {/* Descripción */}
@@ -158,6 +171,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
               placeholder="Describe el paquete turístico..."
             />
+            {fieldErrors.description && fieldErrors.description.map((msg, i) => (
+              <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
+            ))}
           </div>
 
           {/* Categoría */}
@@ -178,6 +194,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
                 </option>
               ))}
             </select>
+            {fieldErrors.category && fieldErrors.category.map((msg, i) => (
+              <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
+            ))}
           </div>
 
           {/* Duración */}
@@ -193,6 +212,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
               placeholder="Ej: 4 días / 3 noches"
             />
+            {fieldErrors.duration && fieldErrors.duration.map((msg, i) => (
+              <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
+            ))}
           </div>
 
           {/* Precio */}
@@ -209,6 +231,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
                 placeholder="0"
               />
+              {fieldErrors.price && fieldErrors.price.map((msg, i) => (
+                <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
+              ))}
             </div>
 
             <div>
@@ -222,6 +247,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
                 placeholder="Si hay oferta"
               />
+              {fieldErrors.originalPrice && fieldErrors.originalPrice.map((msg, i) => (
+                <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
+              ))}
             </div>
           </div>
 
@@ -273,6 +301,9 @@ export default function PackageForm({ packageId }: PackageFormProps) {
                 <span className="text-xl">✓</span> Imagen configurada correctamente
               </div>
             )}
+            {fieldErrors.image && fieldErrors.image.map((msg, i) => (
+              <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
+            ))}
           </div>
 
           {/* Incluye */}

@@ -30,9 +30,9 @@ function packageToDb(pkg: Partial<TravelPackage>): Record<string, unknown> {
     image: pkg.image,
     category: pkg.category,
     is_offer: pkg.isOffer || false,
-    original_price: pkg.originalPrice || null,
-    discount: pkg.discount || null,
-    included: JSON.stringify(pkg.included || [])
+    original_price: pkg.isOffer ? (pkg.originalPrice ?? 0) : null,
+    discount: pkg.isOffer ? (pkg.discount ?? 0) : null,
+    included: Array.isArray(pkg.included) ? pkg.included : [], // JSONB espera array
   }
 }
 

@@ -128,6 +128,7 @@ export default function NewBannerPage() {
           </div>
 
           {/* URL de Destino */}
+          {/*
           <div>
             <label htmlFor="linkUrl" className="block text-sm font-medium text-gray-700 mb-2">
               URL de Destino
@@ -145,8 +146,10 @@ export default function NewBannerPage() {
               Deja vacío si no quieres que el banner sea clickeable.
             </p>
           </div>
+          */}
 
           {/* Texto del Botón */}
+          {/*
           <div>
             <label htmlFor="buttonText" className="block text-sm font-medium text-gray-700 mb-2">
               Texto del Botón
@@ -161,6 +164,7 @@ export default function NewBannerPage() {
               placeholder="Ej: Ver Ofertas"
             />
           </div>
+          */}
 
           {/* Orden de Visualización */}
           <div>
@@ -201,7 +205,7 @@ export default function NewBannerPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50"
+              className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50"
             >
               {isSubmitting ? 'Creando...' : 'Crear Banner'}
             </button>
