@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -10,20 +10,47 @@ export default function NewBannerPage() {
     title: '',
     subtitle: '',
     imageUrl: '',
-    linkUrl: '',
-    buttonText: '',
     isActive: true,
     displayOrder: 0,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    
     setFormData(prev => ({
       ...prev,
       [name]: type === 'number' ? parseInt(value) || 0 : value
     }));
+  };
+
+  // Manejar selección de archivo y subida
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setImagePreview(URL.createObjectURL(file));
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
+      formDataUpload.append('bucket', 'banners');
+      const res = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formDataUpload,
+      });
+      const data = await res.json();
+      if (data.url) {
+        setFormData(prev => ({ ...prev, imageUrl: data.url }));
+      } else {
+        alert('Error al subir la imagen: ' + (data.error || '')); 
+      }
+    } catch (err) {
+      alert('Error inesperado al subir la imagen');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,82 +134,37 @@ export default function NewBannerPage() {
             />
           </div>
 
-          {/* URL de Imagen */}
+          {/* Imagen: subir desde PC o URL */}
           <div>
-            <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-2">
-              URL de la Imagen *
-            </label>
-            <input
-              type="url"
-              id="imageUrl"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="https://ejemplo.com/imagen.jpg"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Recomendado: 1920x600px. Puedes usar Unsplash.com para imágenes gratuitas.
-            </p>
-          </div>
-
-          {/* URL de Destino */}
-          {/*
-          <div>
-            <label htmlFor="linkUrl" className="block text-sm font-medium text-gray-700 mb-2">
-              URL de Destino
-            </label>
-            <input
-              type="text"
-              id="linkUrl"
-              name="linkUrl"
-              value={formData.linkUrl}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Ej: /#ofertas o /packages/123"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Deja vacío si no quieres que el banner sea clickeable.
-            </p>
-          </div>
-          */}
-
-          {/* Texto del Botón */}
-          {/*
-          <div>
-            <label htmlFor="buttonText" className="block text-sm font-medium text-gray-700 mb-2">
-              Texto del Botón
-            </label>
-            <input
-              type="text"
-              id="buttonText"
-              name="buttonText"
-              value={formData.buttonText}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Ej: Ver Ofertas"
-            />
-          </div>
-          */}
-
-          {/* Orden de Visualización */}
-          <div>
-            <label htmlFor="displayOrder" className="block text-sm font-medium text-gray-700 mb-2">
-              Orden de Visualización
-            </label>
-            <input
-              type="number"
-              id="displayOrder"
-              name="displayOrder"
-              value={formData.displayOrder}
-              onChange={handleChange}
-              min="0"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Menor número = mayor prioridad. 0 es el primero.
-            </p>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Imagen *</label>
+            <div className="flex flex-col gap-2">
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#6A3B76] file:text-white hover:file:bg-[#5a2f66]"
+              />
+              {uploading && <span className="text-xs text-gray-500">Subiendo imagen...</span>}
+              {imagePreview && (
+                <img src={imagePreview} alt="Previsualización" className="rounded-lg border max-h-40 object-contain" />
+              )}
+              {formData.imageUrl && !imagePreview && (
+                <img src={formData.imageUrl} alt="Imagen actual" className="rounded-lg border max-h-40 object-contain" />
+              )}
+              <input
+                type="url"
+                id="imageUrl"
+                name="imageUrl"
+                value={formData.imageUrl}
+                onChange={handleChange}
+                placeholder="https://ejemplo.com/imagen.jpg"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent mt-2"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Puedes subir una imagen desde tu PC o pegar una URL. Si subes una imagen, la URL se completará automáticamente.
+              </p>
+            </div>
           </div>
 
           {/* Estado Activo */}

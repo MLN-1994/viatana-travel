@@ -85,15 +85,6 @@ export default function OffersCarousel() {
               {currentBanner.subtitle && (
                 <p className="text-base md:text-lg lg:text-xl mb-4 md:mb-6 max-w-3xl">{currentBanner.subtitle}</p>
               )}
-              
-              {currentBanner.buttonText && currentBanner.linkUrl && (
-                <Link
-                  href={currentBanner.linkUrl}
-                  className="inline-block bg-white text-[#6A3B76] hover:bg-gray-100 font-semibold py-2.5 md:py-3 px-6 md:px-8 rounded-lg transition text-sm md:text-base lg:text-lg"
-                >
-                  {currentBanner.buttonText}
-                </Link>
-              )}
             </div>
           </div>
 
