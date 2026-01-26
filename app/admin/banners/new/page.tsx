@@ -66,7 +66,7 @@ export default function NewBannerPage() {
       <div className="w-full max-w-lg lg:max-w-2xl mx-auto px-2 sm:px-4">
         {/* Botón volver arriba */}
         <div className="mb-6">
-          <Link href="/admin/banners" className="text-[#6A3B76] hover:underline mb-4 inline-block">
+          <Link href="/admin/banners" className="text-primary hover:underline mb-4 inline-block">
             ← Volver a banners
           </Link>
         </div>
@@ -86,7 +86,7 @@ export default function NewBannerPage() {
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="Ej: ¡Descubre el Paraíso Caribeño!"
             />
           </div>
@@ -102,7 +102,7 @@ export default function NewBannerPage() {
               value={formData.subtitle}
               onChange={handleChange}
               rows={2}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="Ej: Paquetes todo incluido con hasta 40% de descuento"
             />
           </div>
@@ -119,7 +119,7 @@ export default function NewBannerPage() {
               value={formData.imageUrl}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="https://ejemplo.com/imagen.jpg"
             />
             <p className="text-xs text-gray-500 mt-1">
@@ -138,7 +138,7 @@ export default function NewBannerPage() {
               name="linkUrl"
               value={formData.linkUrl}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="Ej: /#ofertas o /packages/123"
             />
             <p className="text-xs text-gray-500 mt-1">
@@ -157,7 +157,7 @@ export default function NewBannerPage() {
               name="buttonText"
               value={formData.buttonText}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="Ej: Ver Ofertas"
             />
           </div>
@@ -174,7 +174,7 @@ export default function NewBannerPage() {
               value={formData.displayOrder}
               onChange={handleChange}
               min="0"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             />
             <p className="text-xs text-gray-500 mt-1">
               Menor número = mayor prioridad. 0 es el primero.
@@ -189,7 +189,7 @@ export default function NewBannerPage() {
               name="isActive"
               checked={formData.isActive}
               onChange={handleCheckboxChange}
-              className="w-4 h-4 text-[#6A3B76] border-gray-300 rounded focus:ring-[#6A3B76]"
+              className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
             />
             <label htmlFor="isActive" className="ml-2 text-sm font-medium text-gray-700">
               Banner activo (visible en el sitio)
@@ -201,7 +201,7 @@ export default function NewBannerPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full sm:w-auto bg-[#6A3B76] hover:bg-[#5a2f66] text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50"
+              className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white font-bold py-3 px-6 rounded-lg transition disabled:opacity-50"
             >
               {isSubmitting ? 'Creando...' : 'Crear Banner'}
             </button>
