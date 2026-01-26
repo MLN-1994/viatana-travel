@@ -14,8 +14,6 @@ export default function EditBannerPage() {
     title: '',
     subtitle: '',
     imageUrl: '',
-    linkUrl: '',
-    buttonText: '',
     isActive: true,
     displayOrder: 0,
   });
@@ -37,8 +35,6 @@ export default function EditBannerPage() {
           title: banner.title,
           subtitle: banner.subtitle || '',
           imageUrl: banner.imageUrl,
-          linkUrl: banner.linkUrl || '',
-          buttonText: banner.buttonText || '',
           isActive: banner.isActive,
           displayOrder: banner.displayOrder,
         });
@@ -112,6 +108,8 @@ export default function EditBannerPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-2xl">
+        {/* Botón de volver */}
+        <a className="text-[#6A3B76] hover:underline mb-4 inline-block" href="/admin/banners">← Volver a banners</a>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Editar Banner</h1>
         <p className="text-gray-600 mb-8">Modifica la información del banner</p>
 
@@ -181,35 +179,7 @@ export default function EditBannerPage() {
             </div>
           )}
 
-          {/* URL de Destino */}
-          <div>
-            <label htmlFor="linkUrl" className="block text-sm font-medium text-gray-700 mb-2">
-              URL de Destino
-            </label>
-            <input
-              type="text"
-              id="linkUrl"
-              name="linkUrl"
-              value={formData.linkUrl}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
-            />
-          </div>
-
-          {/* Texto del Botón */}
-          <div>
-            <label htmlFor="buttonText" className="block text-sm font-medium text-gray-700 mb-2">
-              Texto del Botón
-            </label>
-            <input
-              type="text"
-              id="buttonText"
-              name="buttonText"
-              value={formData.buttonText}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
-            />
-          </div>
+          {/* ...existing code... */}
 
           {/* Orden de Visualización */}
           <div>

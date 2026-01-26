@@ -176,8 +176,8 @@ export default function AdminDashboard() {
               ← Desliza para ver más columnas →
             </p>
           </div>
-                    <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
+                            <div className="overflow-x-auto">
+                          <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-linear-to-r from-[#6A3B76] to-purple-600">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
@@ -237,7 +237,7 @@ export default function AdminDashboard() {
                           height={48}
                           className="h-10 w-10 md:h-12 md:w-12 rounded-lg object-cover mr-3 shadow-md border-2 border-purple-200"
                         />
-                        <div className="text-xs md:text-sm font-semibold text-gray-900 max-w-[120px] md:max-w-none truncate">
+                        <div className="text-xs md:text-sm font-semibold text-gray-900">
                           {pkg.title}
                         </div>
                       </div>
