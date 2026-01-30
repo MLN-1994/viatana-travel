@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { TravelPackage } from '@/types';
 import { contactInfo } from '@/data/packages';
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp, FaMapMarkerAlt, FaClock, FaArrowRight } from 'react-icons/fa';
 
 interface PackageCardProps {
   package: TravelPackage;
@@ -15,76 +15,102 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
   const whatsappLink = `https://wa.me/${contactInfo.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:shadow-2xl flex flex-col h-full">
-      <Link href={`/packages/${pkg.id}`} className="relative h-48 md:h-56 overflow-hidden shrink-0 cursor-pointer group">
-        <Image
-          src={pkg.image}
-          alt={pkg.title}
-          fill
-          className="object-cover transition-transform group-hover:scale-110"
-        />
-        {pkg.isOffer && (
-          <div className="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full font-bold text-sm">
-            -{pkg.discount}% OFF
-          </div>
-        )}
-        <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700">
-          {pkg.category.charAt(0).toUpperCase() + pkg.category.slice(1)}
-        </div>
-        {/* Overlay with "Ver más" text */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <span className="text-white text-lg font-bold bg-[#6A3B76] px-5 py-2.5 rounded-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">
-            Ver detalles
-          </span>
-        </div>
-      </Link>
-
-      <div className="p-5 flex flex-col grow">
+    <div className="group bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] flex flex-col h-full hover:-translate-y-2">
+      
+      {/* Contenedor de Imagen */}
+      <div className="relative h-64 overflow-hidden shrink-0">
         <Link href={`/packages/${pkg.id}`}>
-          <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2 hover:text-[#6A3B76] transition-colors cursor-pointer min-h-[3.5rem]">{pkg.title}</h3>
+          <Image
+            src={pkg.image}
+            alt={pkg.title}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          {/* Overlay gradiente para legibilidad */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
         </Link>
-        <p className="text-gray-600 mb-3 flex items-center gap-1.5 text-sm">
-          <span>📍</span> {pkg.destination}
-        </p>
-        <p className="text-gray-700 mb-4 text-sm line-clamp-2 min-h-[2.5rem]">{pkg.description}</p>
 
-        <div className="flex items-center justify-between mb-4 text-sm text-gray-600">
-          <span className="flex items-center gap-1">
-            <span>⏱️</span> {pkg.duration}
+        {/* Tags superiores */}
+        <div className="absolute top-4 left-4 flex flex-col gap-2">
+          <span className="bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest text-gray-800 shadow-sm">
+            {pkg.category}
           </span>
+          {pkg.isOffer && (
+            <span className="bg-red-500 text-white px-4 py-1.5 rounded-full font-black text-[11px] uppercase tracking-widest shadow-lg animate-pulse">
+              {pkg.discount}% OFF
+            </span>
+          )}
         </div>
 
-        {/* Price section */}
-        <div className="border-t pt-4 mt-auto">
-          <div className="flex items-end justify-between mb-4">
-            <div>
+        {/* Botón flotante de "Ver más" que aparece al hacer hover */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+          <Link 
+            href={`/packages/${pkg.id}`}
+            className="bg-white text-gray-900 p-4 rounded-full shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+          >
+            <FaArrowRight className="text-xl" />
+          </Link>
+        </div>
+      </div>
+
+      {/* Contenido */}
+      <div className="p-6 flex flex-col grow">
+        <div className="flex justify-between items-start mb-3">
+          <div className="flex items-center gap-1.5 text-[#6A3B76] font-bold text-xs uppercase tracking-tighter">
+            <FaMapMarkerAlt className="opacity-70" />
+            {pkg.destination}
+          </div>
+          <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium">
+            <FaClock className="opacity-50" />
+            {pkg.duration}
+          </div>
+        </div>
+
+        <Link href={`/packages/${pkg.id}`}>
+          <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#6A3B76] transition-colors leading-tight min-h-[3rem]">
+            {pkg.title}
+          </h3>
+        </Link>
+        
+        <p className="text-gray-500 text-sm line-clamp-2 mb-6 leading-relaxed grow">
+          {pkg.description}
+        </p>
+
+        {/* Footer de la Card / Precios */}
+        <div className="pt-5 border-t border-slate-50 mt-auto">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex flex-col">
               {pkg.isOffer && pkg.originalPrice && (
-                <span className="text-gray-400 line-through text-xs block">
-                  USD$ {pkg.originalPrice}
+                <span className="text-gray-400 line-through text-xs font-medium">
+                  USD {pkg.originalPrice}
                 </span>
               )}
-              <span className="text-2xl md:text-3xl font-bold text-[#6A3B76]">
-                USD$ {pkg.price}
-              </span>
-              <span className="text-gray-600 text-xs ml-1 block md:inline">x persona</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl font-black text-gray-900 tracking-tighter">
+                  <span className="text-sm font-bold text-[#6A3B76] mr-0.5">USD</span>{pkg.price}
+                </span>
+              </div>
             </div>
+            <span className="text-[10px] font-bold uppercase text-gray-400 tracking-widest leading-none">
+              Por<br/>persona
+            </span>
           </div>
 
-          <div className="flex flex-col gap-2">
+          <div className="grid grid-cols-5 gap-2">
             <Link
               href={`/packages/${pkg.id}`}
-              className="w-full bg-[#6A3B76] hover:bg-[#5a2f66] text-white font-semibold py-2.5 px-4 rounded-lg transition-all text-center text-sm"
+              className="col-span-3 bg-gray-900 hover:bg-black text-white text-xs font-bold uppercase tracking-widest py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-gray-200"
             >
-              Ver detalles
+              Detalles
             </Link>
             <a
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-all flex items-center justify-center gap-2 text-sm"
+              className="col-span-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl transition-all flex items-center justify-center shadow-lg shadow-green-100"
+              title="Consultar por WhatsApp"
             >
-              <FaWhatsapp className="text-lg" />
-              Consultar
+              <FaWhatsapp className="text-xl" />
             </a>
           </div>
         </div>

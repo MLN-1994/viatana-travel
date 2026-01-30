@@ -66,8 +66,8 @@ export default function PackagesCarousel() {
       <div className="container mx-auto px-4">
         {/* Header y filtros */}
         <div className="mb-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">
-            Nuestros Paquetes Turísticos
+          <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 tracking-tight text-center">
+            Nuestros paquetes <span className="text-[#6A3B76]">turisticos</span>
           </h2>
           <p className="text-gray-600 text-center mb-8">
             Explora nuestros destinos más populares
