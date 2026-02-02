@@ -35,7 +35,7 @@ export default function Headline() {
         {/* Call to Action WhatsApp */}
         <div className="mt-10 flex justify-center">
           <a
-            href="https://wa.me/549XXXXXXXXXX" // Reemplaza por tu número
+            href="https://wa.me/5491124967442" // Reemplaza por tu número
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#6A3B76] to-purple-600 text-white font-bold rounded-2xl shadow-lg hover:from-purple-700 hover:to-purple-800 transition-all text-lg active:scale-95"
