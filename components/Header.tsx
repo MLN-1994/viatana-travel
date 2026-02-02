@@ -42,8 +42,13 @@ export default function Header() {
 
         {/* Main header */}
         <div className="flex justify-between items-center py-3 md:py-4">
-          <Link href="/" className="text-xl md:text-2xl lg:text-3xl font-bold text-[#6A3B76]">
-            Viatana Travel
+          <Link href="/" className="flex items-center gap-2">
+            <img
+              src="/logo%20largo%20violeta.png"
+              alt="Viatana Travel Logo"
+              className="h-10 w-auto object-contain"
+              style={{ maxWidth: '180px' }}
+            />
           </Link>
 
           {/* Desktop Navigation */}

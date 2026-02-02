@@ -15,11 +15,11 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
   const whatsappLink = `https://wa.me/${contactInfo.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <div className="group bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] flex flex-col h-full hover:-translate-y-2">
+    <div className="group bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(106,59,118,0.15)] flex flex-col h-full hover:-translate-y-2 hover:border-[#6A3B76]/30">
       
       {/* Contenedor de Imagen */}
       <div className="relative h-64 overflow-hidden shrink-0">
-        <Link href={`/packages/${pkg.id}`}>
+        <Link href={`/packages/${pkg.id}`} className="block h-full w-full">
           <Image
             src={pkg.image}
             alt={pkg.title}
@@ -31,8 +31,8 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
         </Link>
 
         {/* Tags superiores */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
-          <span className="bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest text-gray-800 shadow-sm">
+        <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none">
+          <span className="bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest text-[#6A3B76] shadow-sm">
             {pkg.category}
           </span>
           {pkg.isOffer && (
@@ -43,10 +43,10 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
         </div>
 
         {/* Botón flotante de "Ver más" que aparece al hacer hover */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
           <Link 
             href={`/packages/${pkg.id}`}
-            className="bg-white text-gray-900 p-4 rounded-full shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+            className="bg-white text-[#6A3B76] p-4 rounded-full shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 pointer-events-auto hover:bg-[#6A3B76] hover:text-white"
           >
             <FaArrowRight className="text-xl" />
           </Link>
@@ -99,7 +99,7 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
           <div className="grid grid-cols-5 gap-2">
             <Link
               href={`/packages/${pkg.id}`}
-              className="col-span-3 bg-gray-900 hover:bg-black text-white text-xs font-bold uppercase tracking-widest py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-gray-200"
+              className="col-span-3 bg-[#6A3B76] hover:bg-[#5a2f66] text-white text-xs font-bold uppercase tracking-widest py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-purple-200"
             >
               Detalles
             </Link>

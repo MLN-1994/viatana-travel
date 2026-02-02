@@ -1,11 +1,11 @@
 import { TravelPackage, ContactInfo } from '@/types';
 
 export const contactInfo: ContactInfo = {
-  phone: '+51 999 999 999',
-  whatsapp: '51999999999', // Sin espacios ni símbolos para el link de WhatsApp
-  email: 'contacto@viatanatravel.com',
+  phone: '+54 9 11 2496-7442',
+  whatsapp: '5491124967442', // Sin espacios ni símbolos para el link de WhatsApp
+  email: 'info@viatanatravel.com',
   facebook: 'https://facebook.com/viatanatravel',
-  instagram: 'https://instagram.com/viatanatravel',
+  instagram: 'https://www.instagram.com/viatana.travel/?hl=es',
   twitter: 'https://twitter.com/viatanatravel',
 };
 
