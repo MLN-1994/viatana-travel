@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { contactInfo } from '@/data/packages';
-import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebook, FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
   const pathname = usePathname();
@@ -197,16 +197,7 @@ export default function Footer() {
                   <FaInstagram className="text-xl" />
                 </a>
               )}
-              {contactInfo.twitter && (
-                <a
-                  href={contactInfo.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-800 hover:bg-[#1da1f2] rounded-full flex items-center justify-center transition"
-                >
-                  <FaTwitter className="text-xl" />
-                </a>
-              )}
+              {/* Twitter eliminado */}
               <a
                 href={`https://wa.me/${contactInfo.whatsapp}`}
                 target="_blank"
