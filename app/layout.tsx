@@ -47,6 +47,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={`${lexend.variable} font-sans antialiased`}>
         <div className="min-h-screen flex flex-col">
           <ConditionalLayout>
