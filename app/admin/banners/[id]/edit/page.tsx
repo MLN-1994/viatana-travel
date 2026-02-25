@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import type { Banner } from '@/types';
@@ -19,6 +19,35 @@ export default function EditBannerPage() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  // Manejar selección de archivo y subida
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setImagePreview(URL.createObjectURL(file));
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
+      formDataUpload.append('bucket', 'banners');
+      const res = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formDataUpload,
+      });
+      const data = await res.json();
+      if (data.url) {
+        setFormData(prev => ({ ...prev, imageUrl: data.url }));
+      } else {
+        alert('Error al subir la imagen: ' + (data.error || ''));
+      }
+    } catch (err) {
+      alert('Error inesperado al subir la imagen');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     if (bannerId) {
@@ -145,23 +174,39 @@ export default function EditBannerPage() {
             />
           </div>
 
-          {/* URL de Imagen */}
+
+          {/* Imagen: subir desde PC o URL */}
           <div>
-            <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-2">
-              URL de la Imagen *
-            </label>
-            <input
-              type="url"
-              id="imageUrl"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Recomendado: 1920x600px
-            </p>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Imagen *</label>
+            <div className="flex flex-col gap-2">
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#6A3B76] file:text-white hover:file:bg-[#5a2f66]"
+              />
+              {uploading && <span className="text-xs text-gray-500">Subiendo imagen...</span>}
+              {imagePreview && (
+                <img src={imagePreview} alt="Previsualización" className="rounded-lg border max-h-40 object-contain" />
+              )}
+              {formData.imageUrl && !imagePreview && (
+                <img src={formData.imageUrl} alt="Imagen actual" className="rounded-lg border max-h-40 object-contain" />
+              )}
+              <input
+                type="url"
+                id="imageUrl"
+                name="imageUrl"
+                value={formData.imageUrl}
+                onChange={handleChange}
+                required
+                placeholder="https://ejemplo.com/imagen.jpg"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent mt-2"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Puedes subir una imagen desde tu PC o pegar una URL. Si subes una imagen, la URL se completará automáticamente. Recomendado: 1920x600px
+              </p>
+            </div>
           </div>
 
           {/* Vista previa de imagen */}
