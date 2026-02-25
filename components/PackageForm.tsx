@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { TravelPackage, Category } from "@/types"
 
@@ -27,6 +27,37 @@ export default function PackageForm({ packageId }: PackageFormProps) {
     category: ""
   })
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({})
+
+  // Para subida de imagen tipo banners
+  const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setImagePreview(URL.createObjectURL(file));
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
+      formDataUpload.append('bucket', 'packages');
+      const res = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formDataUpload,
+      });
+      const data = await res.json();
+      if (data.url) {
+        setFormData(prev => ({ ...prev, image: data.url }));
+      } else {
+        alert('Error al subir la imagen: ' + (data.error || ''));
+      }
+    } catch (err) {
+      alert('Error inesperado al subir la imagen');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     // Cargar categorías
@@ -283,24 +314,37 @@ export default function PackageForm({ packageId }: PackageFormProps) {
             )}
           </div>
 
-          {/* Imagen URL */}
+          {/* Imagen: subir desde PC o URL */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              URL de la Imagen *
-            </label>
-            <input
-              type="url"
-              required
-              value={formData.image}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
-              placeholder="https://ejemplo.com/imagen.jpg"
-            />
-            {formData.image && (
-              <div className="mt-3 p-3 bg-green-50 border-2 border-green-200 rounded-lg flex items-center gap-2 text-sm text-green-700 font-medium">
-                <span className="text-xl">✓</span> Imagen configurada correctamente
-              </div>
-            )}
+            <label className="block text-sm font-medium text-gray-700 mb-2">Imagen *</label>
+            <div className="flex flex-col gap-2">
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#6A3B76] file:text-white hover:file:bg-[#5a2f66]"
+              />
+              {uploading && <span className="text-xs text-gray-500">Subiendo imagen...</span>}
+              {imagePreview && (
+                <img src={imagePreview} alt="Previsualización" className="rounded-lg border max-h-40 object-contain" />
+              )}
+              {formData.image && !imagePreview && (
+                <img src={formData.image} alt="Imagen actual" className="rounded-lg border max-h-40 object-contain" />
+              )}
+              <input
+                type="url"
+                id="image"
+                name="image"
+                value={formData.image}
+                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                placeholder="https://ejemplo.com/imagen.jpg"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent mt-2"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Puedes subir una imagen desde tu PC o pegar una URL. Si subes una imagen, la URL se completará automáticamente.
+              </p>
+            </div>
             {fieldErrors.image && fieldErrors.image.map((msg, i) => (
               <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
             ))}

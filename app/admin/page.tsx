@@ -64,21 +64,25 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-3 md:gap-4">
               <a
                 href="/"
-                className="bg-linear-to-br from-[#6A3B76] to-purple-600 p-2 md:p-3 rounded-xl shadow-lg hover:scale-110 transition-transform"
+                className="hover:scale-105 transition-transform flex items-center"
                 title="Ir a la página principal"
               >
-                <span className="text-2xl md:text-3xl">✈️</span>
+                <Image
+                  src="/logo largo violeta.png"
+                  alt="Viatana Travel Logo"
+                  width={180}
+                  height={40}
+                  priority
+                  className="object-contain h-7 w-auto"
+                />
               </a>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl md:text-3xl font-bold text-[#6A3B76] flex items-center gap-2">
-                    Viatana Travel
-                    <span className="text-sm md:text-lg font-normal text-gray-500">Admin</span>
-                  </h1>
+                  <span className="text-sm md:text-lg font-normal text-gray-500">Admin</span>
                   <a
                     href="/"
-                    className="text-xs md:text-sm text-purple-600 hover:text-purple-800 underline hidden sm:inline"
                     title="Ver sitio público"
+                    className="text-xs md:text-sm text-purple-600 hover:text-purple-800 underline hidden sm:inline"
                   >
                     Ver sitio →
                   </a>

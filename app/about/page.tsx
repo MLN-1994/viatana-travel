@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { FaWhatsapp } from 'react-icons/fa';
+import { contactInfo } from '@/data/packages';
 
 export const metadata: Metadata = {
   title: 'Sobre Nosotros - Viatana Travel',
@@ -10,33 +12,26 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {/* Sección Sobre Nosotros actualizada */}
       <section className="relative h-[400px] bg-gradient-to-r from-[#6A3B76] to-[#8B5A9F] flex items-center justify-center text-white">
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Sobre Nosotros</h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-            Tu agencia de viajes de confianza, creando experiencias inolvidables desde hace años
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Quiénes somos – Viatana Travel</h1>
         </div>
       </section>
 
-      {/* Nuestra Historia */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#6A3B76] mb-6 text-center">
-              📖 Nuestra Historia
-            </h2>
-            <div className="space-y-4 text-gray-700 text-lg leading-relaxed">
+            <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
               <p>
-                <strong>Viatana Travel</strong> nació del sueño de compartir la belleza del mundo con viajeros que buscan experiencias auténticas y memorables. Fundada por un equipo de apasionados por los viajes, nuestra agencia se ha convertido en un referente de confianza para miles de familias, parejas y aventureros.
+                En <strong>Viatana Travel</strong> creemos que <strong>viajar</strong> es mucho más que trasladarse: es vivir <strong>experiencias únicas</strong> y guardar <strong>recuerdos inolvidables</strong>. Nuestro equipo de <strong>profesionales matriculados en turismo</strong>, con más de <strong>20 años de trayectoria</strong>, combina <strong>conocimiento</strong>, <strong>creatividad</strong> y <strong>pasión</strong> para diseñar <strong>paquetes turísticos a medida</strong>.
               </p>
               <p>
-                Desde nuestros inicios, hemos mantenido un compromiso inquebrantable: ofrecer paquetes de viaje personalizados que superen las expectativas de nuestros clientes. Cada destino que ofrecemos ha sido cuidadosamente seleccionado y cada itinerario diseñado pensando en crear recuerdos que duren toda la vida.
+                Nos diferencia el <strong>trato cercano y humano</strong>: escuchamos, asesoramos y acompañamos en cada etapa del viaje, tanto de manera presencial en <strong>Olivos</strong> como online. Nuestra filosofía es “volver a la vieja escuela del trato humano, con herramientas actuales”, ofreciendo <strong>atención personalizada</strong> y <strong>soluciones pensadas para cada pasajero</strong>.
               </p>
               <p>
-                Hoy, con presencia en múltiples destinos alrededor del mundo, seguimos creciendo gracias a la confianza de nuestros viajeros y nuestro equipo de expertos dedicados a hacer de cada viaje una experiencia extraordinaria.
+                Cada propuesta que armamos está previamente recorrida y validada, porque nuestra <strong>misión</strong> es transformar cada viaje en una experiencia <strong>auténtica</strong>, <strong>segura</strong> y <strong>enriquecedora</strong>.
               </p>
             </div>
           </div>
@@ -188,16 +183,20 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/#paquetes"
-              className="bg-white text-[#6A3B76] hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition inline-block"
+              className="bg-white text-[#6A3B76] font-bold py-3 px-8 rounded-lg transition inline-block border-2 border-white hover:bg-[#6A3B76] hover:text-white hover:border-white"
             >
-              Ver Paquetes
+              Ver paquetes
             </Link>
-            <Link
-              href="/#contacto"
-              className="bg-transparent border-2 border-white hover:bg-white hover:text-[#6A3B76] font-bold py-3 px-8 rounded-lg transition inline-block"
+            <a
+              href={`https://wa.me/${contactInfo.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3 px-8 rounded-xl transition-all shadow-sm shadow-green-100 text-base md:text-lg"
+              title="Consultar por WhatsApp"
             >
-              Contáctanos
-            </Link>
+              <FaWhatsapp className="text-2xl" />
+              Consultar por WhatsApp
+            </a>
           </div>
         </div>
       </section>

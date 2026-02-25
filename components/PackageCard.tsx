@@ -73,7 +73,7 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
         </Link>
         
         <p className="text-gray-500 text-sm line-clamp-2 mb-6 leading-relaxed grow">
-          {pkg.description}
+           {pkg.description}
         </p>
 
         {/* Footer de la Card / Precios */}
