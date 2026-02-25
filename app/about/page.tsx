@@ -13,25 +13,46 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen">
       {/* Sección Sobre Nosotros actualizada */}
-      <section className="relative h-[400px] bg-gradient-to-r from-[#6A3B76] to-[#8B5A9F] flex items-center justify-center text-white">
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Quiénes somos – Viatana Travel</h1>
-        </div>
-      </section>
+      <section className="relative min-h-[500px] flex items-center justify-center overflow-hidden bg-[#6A3B76]">
+  {/* Fondo con degradado refinado y un toque de textura */}
+  <div className="absolute inset-0 bg-gradient-to-br from-[#6A3B76] via-[#7B4A8B] to-[#8B5A9F]"></div>
+  
+  {/* Overlay sutil para mejorar legibilidad sin oscurecer demasiado */}
+  <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]"></div>
+
+  {/* Elemento decorativo: Círculo difuminado para dar profundidad visual */}
+  <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+
+  <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
+    <div className="max-w-4xl mx-auto">
+      {/* Etiqueta superior opcional para contexto */}
+      <span className="inline-block px-4 py-1 mb-6 text-sm font-medium tracking-widest uppercase bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white/90">
+        Bienvenido a Viatana
+      </span>
+
+      <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight text-white">
+        Viajar debería ser <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70">simple, seguro y memorable.</span>
+      </h1>
+
+      <div className="w-20 h-1 bg-[#8B5A9F] mx-auto mb-8 rounded-full shadow-lg"></div>
+
+      <p className="text-lg md:text-2xl text-white/90 leading-relaxed font-light max-w-2xl mx-auto">
+        En Viatana combinamos años de experiencia y atención humana para transformar cada destino en una <span className="font-semibold text-white">experiencia única.</span>
+      </p>
+      
+      {/* Espacio para un botón de acción (Call to Action) */}
+      
+    </div>
+  </div>
+</section>
 
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#6A3B76] mb-8 text-center">NUESTRA HISTORIA</h2>
             <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
-              <p>
-                En <strong>Viatana Travel</strong> creemos que <strong>viajar</strong> es mucho más que trasladarse: es vivir <strong>experiencias únicas</strong> y guardar <strong>recuerdos inolvidables</strong>. Nuestro equipo de <strong>profesionales matriculados en turismo</strong>, con más de <strong>20 años de trayectoria</strong>, combina <strong>conocimiento</strong>, <strong>creatividad</strong> y <strong>pasión</strong> para diseñar <strong>paquetes turísticos a medida</strong>.
-              </p>
-              <p>
-                Nos diferencia el <strong>trato cercano y humano</strong>: escuchamos, asesoramos y acompañamos en cada etapa del viaje, tanto de manera presencial en <strong>Olivos</strong> como online. Nuestra filosofía es “volver a la vieja escuela del trato humano, con herramientas actuales”, ofreciendo <strong>atención personalizada</strong> y <strong>soluciones pensadas para cada pasajero</strong>.
-              </p>
-              <p>
-                Cada propuesta que armamos está previamente recorrida y validada, porque nuestra <strong>misión</strong> es transformar cada viaje en una experiencia <strong>auténtica</strong>, <strong>segura</strong> y <strong>enriquecedora</strong>.
+              <p className="text-center">
+                <span className="font-bold text-[#6A3B76]">Viatana Travel</span> nace con una idea clara: volver a poner a las <span className="font-bold">personas</span> en el centro del viaje. Después de más de <span className="font-bold">20 años de experiencia</span> en la industria turística, entendimos que <span className="font-bold">viajar</span> no debería sentirse como una compra automática, sino como una <span className="font-bold">experiencia acompañada</span> desde el primer momento. Por eso creamos una agencia enfocada en <span className="font-bold">escuchar</span>, asesorar y diseñar viajes reales para personas reales. Cada destino, cada propuesta y cada detalle están pensados para que el viajero disfrute con tranquilidad, sabiendo que hay un equipo profesional detrás que lo acompaña antes, durante y después del viaje. Porque creemos que los mejores recuerdos empiezan con una <span className="font-bold">buena atención</span>.
               </p>
             </div>
           </div>
@@ -49,7 +70,7 @@ export default function AboutPage() {
                 Nuestra Misión
               </h3>
               <p className="text-gray-700 text-center leading-relaxed">
-                Proporcionar experiencias de viaje excepcionales que inspiren, transformen y creen recuerdos inolvidables, ofreciendo un servicio personalizado y de calidad que supere las expectativas de cada viajero.
+                Brindar experiencias de viaje diseñadas a medida, con atención humana real, precios competitivos y acompañamiento integral, para que cada persona viaje tranquila, sin sorpresas y con la confianza de estar respaldada en cada etapa del camino.
               </p>
             </div>
 
@@ -60,7 +81,7 @@ export default function AboutPage() {
                 Nuestra Visión
               </h3>
               <p className="text-gray-700 text-center leading-relaxed">
-                Ser la agencia de viajes líder reconocida por nuestra excelencia en servicio, innovación en experiencias turísticas y compromiso con el viajero, conectando personas con destinos extraordinarios alrededor del mundo.
+                Ser una agencia de viajes referente por su cercanía y excelencia en servicio, combinando experiencia, innovación y alianzas estratégicas con operadores y aerolíneas para ofrecer viajes cada vez más accesibles, eficientes y personalizados, conectando a las personas con el mundo de una manera simple y confiable.
               </p>
             </div>
           </div>
@@ -76,37 +97,38 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {/* Valor 1 */}
             <div className="text-center p-6 rounded-lg hover:bg-gray-50 transition">
-              <div className="text-5xl mb-4">🤝</div>
-              <h4 className="text-xl font-bold text-[#6A3B76] mb-2">Confianza</h4>
+              <div className="text-5xl mb-4">🧑‍🤝‍🧑</div>
+              <h4 className="text-xl font-bold text-[#6A3B76] mb-2">Atencion humana real</h4>
               <p className="text-gray-600">
-                Construimos relaciones duraderas basadas en la transparencia y el compromiso con nuestros clientes.
+                Personas reales acompañando cada viaje, sin automatizaciones ni respuestas impersonales.
               </p>
             </div>
 
             {/* Valor 2 */}
             <div className="text-center p-6 rounded-lg hover:bg-gray-50 transition">
               <div className="text-5xl mb-4">⭐</div>
-              <h4 className="text-xl font-bold text-[#6A3B76] mb-2">Excelencia</h4>
+              <h4 className="text-xl font-bold text-[#6A3B76] mb-2">Compromiso con el viajero</h4>
               <p className="text-gray-600">
-                Buscamos la perfección en cada detalle, ofreciendo servicios de la más alta calidad.
+                Acompañamos antes, durante y después del viaje, cuidando cada detalle.
               </p>
             </div>
 
             {/* Valor 3 */}
             <div className="text-center p-6 rounded-lg hover:bg-gray-50 transition">
               <div className="text-5xl mb-4">🌍</div>
-              <h4 className="text-xl font-bold text-[#6A3B76] mb-2">Pasión</h4>
+              <h4 className="text-xl font-bold text-[#6A3B76] mb-2">Pasión por viajar</h4>
               <p className="text-gray-600">
-                Amamos lo que hacemos y esa pasión se refleja en cada viaje que organizamos.
+                Exploramos destinos y experiencias para ofrecer propuestas auténticas.
               </p>
             </div>
 
             {/* Valor 4 */}
             <div className="text-center p-6 rounded-lg hover:bg-gray-50 transition">
-              <div className="text-5xl mb-4">💡</div>
-              <h4 className="text-xl font-bold text-[#6A3B76] mb-2">Innovación</h4>
+              <div className="text-5xl mb-4">🤝</div>
+              <h4 className="text-xl font-bold text-[#6A3B76] mb-2">Confianza y transparencia</h4>
               <p className="text-gray-600">
-                Constantemente buscamos nuevas formas de mejorar y sorprender a nuestros viajeros.
+                Asesoramos con honestidad para encontrar siempre la mejor opción.
+
               </p>
             </div>
           </div>
@@ -124,7 +146,7 @@ export default function AboutPage() {
               <div className="text-4xl mb-3">👨‍✈️</div>
               <h4 className="text-xl font-bold text-[#6A3B76] mb-3">Expertos en Viajes</h4>
               <p className="text-gray-600">
-                Nuestro equipo cuenta con años de experiencia y conocimiento profundo de cada destino que ofrecemos.
+                Más de 20 años de experiencia en la industria turística respaldan cada propuesta y recomendación que realizamos.
               </p>
             </div>
 
@@ -132,7 +154,7 @@ export default function AboutPage() {
               <div className="text-4xl mb-3">🎨</div>
               <h4 className="text-xl font-bold text-[#6A3B76] mb-3">Paquetes Personalizados</h4>
               <p className="text-gray-600">
-                Cada viaje se adapta a tus necesidades, preferencias y presupuesto para una experiencia única.
+               Todos los destinos y experiencias que ofrecemos son previamente evaluados por nuestro equipo, asegurando calidad y confianza en cada viaje.
               </p>
             </div>
 
@@ -140,7 +162,7 @@ export default function AboutPage() {
               <div className="text-4xl mb-3">🛡️</div>
               <h4 className="text-xl font-bold text-[#6A3B76] mb-3">Garantía y Seguridad</h4>
               <p className="text-gray-600">
-                Viaja con tranquilidad sabiendo que cuentas con nuestro respaldo y asistencia 24/7.
+                Acompañamiento permanente y asistencia ante imprevistos para que viajes con tranquilidad en todo momento.
               </p>
             </div>
 
@@ -148,7 +170,7 @@ export default function AboutPage() {
               <div className="text-4xl mb-3">💰</div>
               <h4 className="text-xl font-bold text-[#6A3B76] mb-3">Mejor Relación Calidad-Precio</h4>
               <p className="text-gray-600">
-                Negociamos directamente con proveedores para ofrecerte las mejores tarifas sin comprometer calidad.
+                Creamos viajes a medida y combinaciones exclusivas que optimizan costos sin resignar experiencia ni calidad.
               </p>
             </div>
 
@@ -156,7 +178,7 @@ export default function AboutPage() {
               <div className="text-4xl mb-3">💬</div>
               <h4 className="text-xl font-bold text-[#6A3B76] mb-3">Atención Personalizada</h4>
               <p className="text-gray-600">
-                Desde la planificación hasta tu regreso, estaremos contigo en cada paso del camino.
+                Te escuchamos, te asesoramos y diseñamos tu viaje de manera directa y humana, sin bots ni respuestas automáticas
               </p>
             </div>
 
@@ -164,7 +186,7 @@ export default function AboutPage() {
               <div className="text-4xl mb-3">🌟</div>
               <h4 className="text-xl font-bold text-[#6A3B76] mb-3">Miles de Viajeros Felices</h4>
               <p className="text-gray-600">
-                Nuestra mejor referencia son los testimonios y recomendaciones de quienes ya viajaron con nosotros.
+                Viajeros y empresas nos eligen y recomiendan desde hace más de dos décadas gracias a nuestro compromiso y servicio.
               </p>
             </div>
           </div>
@@ -175,10 +197,12 @@ export default function AboutPage() {
       <section className="py-16 bg-gradient-to-r from-[#6A3B76] to-[#8B5A9F] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            ¿Listo para tu próxima aventura?
+            ¿Listo para tu próxima experiencia?
           </h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Déjanos ayudarte a planificar el viaje de tus sueños. Nuestro equipo de expertos está listo para crear una experiencia inolvidable solo para ti.
+            Dejanos ayudarte a planificar el viaje que estás imaginando.
+Nuestro equipo está listo para acompañarte y crear una experiencia inolvidable pensada especialmente para vos.
+
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
