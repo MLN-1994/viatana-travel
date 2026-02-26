@@ -16,6 +16,8 @@ export default function NewBannerPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [validationDetails, setValidationDetails] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -63,6 +65,8 @@ export default function NewBannerPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setFormError(null);
+    setValidationDetails(null);
 
     try {
       const response = await fetch('/api/banners', {
@@ -78,11 +82,12 @@ export default function NewBannerPage() {
         router.push('/admin/banners');
       } else {
         const error = await response.json();
-        alert(`Error: ${error.error || 'No se pudo crear el banner'}`);
+        setFormError(error.error || 'No se pudo crear el banner');
+        if (error.details) setValidationDetails(error.details);
       }
     } catch (error) {
       console.error('Error creating banner:', error);
-      alert('Error al crear el banner');
+      setFormError('Error al crear el banner');
     } finally {
       setIsSubmitting(false);
     }
@@ -101,6 +106,20 @@ export default function NewBannerPage() {
         <p className="text-gray-600 mb-8 text-center">Agrega un nuevo banner al carousel principal</p>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-4 sm:p-6 space-y-6">
+          {formError && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-2">
+              <strong>Error:</strong> {formError}
+              {validationDetails && validationDetails.fieldErrors && (
+                <ul className="mt-1 text-sm list-disc list-inside">
+                  {Object.entries(validationDetails.fieldErrors).map(([field, errors]) =>
+                    Array.isArray(errors) && errors.length > 0 ? (
+                      <li key={field}><b>{field}:</b> {errors.join(', ')}</li>
+                    ) : null
+                  )}
+                </ul>
+              )}
+            </div>
+          )}
           {/* Título */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
@@ -165,6 +184,26 @@ export default function NewBannerPage() {
                 Puedes subir una imagen desde tu PC o pegar una URL. Si subes una imagen, la URL se completará automáticamente.
               </p>
             </div>
+          </div>
+
+          {/* Orden de Visualización */}
+          <div>
+            <label htmlFor="displayOrder" className="block text-sm font-medium text-gray-700 mb-2">
+              Orden de visualización
+            </label>
+            <input
+              type="number"
+              id="displayOrder"
+              name="displayOrder"
+              value={formData.displayOrder}
+              onChange={handleChange}
+              min={0}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              placeholder="Ej: 0 para primero, 1 para segundo, etc."
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Menor número = mayor prioridad en el carrusel
+            </p>
           </div>
 
           {/* Estado Activo */}
