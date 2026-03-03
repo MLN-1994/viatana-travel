@@ -9,6 +9,7 @@ export const bannerSchema = z.object({
   buttonText: z.string().max(50).optional().or(z.literal("")),
   isActive: z.boolean(),
   displayOrder: z.number().int().min(0, "El orden debe ser un número positivo"),
+  packageId: z.string().uuid().optional().or(z.literal("")),
 });
 
 export const bannerUpdateSchema = z.object({

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -12,7 +12,26 @@ export default function NewBannerPage() {
     imageUrl: '',
     isActive: true,
     displayOrder: 0,
+    packageId: '',
   });
+  const [packages, setPackages] = useState([]);
+    useEffect(() => {
+      // Cargar paquetes para el select desde la API
+      async function fetchPackages() {
+        try {
+          const res = await fetch('/api/packages');
+          if (res.ok) {
+            const pkgs = await res.json();
+            setPackages(pkgs);
+          } else {
+            setPackages([]);
+          }
+        } catch {
+          setPackages([]);
+        }
+      }
+      fetchPackages();
+    }, []);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -20,7 +39,7 @@ export default function NewBannerPage() {
   const [validationDetails, setValidationDetails] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -67,6 +86,9 @@ export default function NewBannerPage() {
     setIsSubmitting(true);
     setFormError(null);
     setValidationDetails(null);
+
+    // LOG: Verificar datos enviados
+    console.log('FORM DATA ENVIADO:', formData);
 
     try {
       const response = await fetch('/api/banners', {
@@ -204,6 +226,28 @@ export default function NewBannerPage() {
             <p className="text-xs text-gray-500 mt-1">
               Menor número = mayor prioridad en el carrusel
             </p>
+          </div>
+
+          {/* Selección de Paquete */}
+          <div>
+            <label htmlFor="packageId" className="block text-sm font-medium text-gray-700 mb-2">
+              Paquete vinculado (opcional)
+            </label>
+            <select
+              id="packageId"
+              name="packageId"
+              value={formData.packageId}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
+              <option value="">-- Sin paquete vinculado --</option>
+              {packages.map((pkg: any) => (
+                <option key={pkg.id} value={pkg.id}>
+                  {pkg.title} ({pkg.destination})
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-gray-500 mt-1">Si seleccionas un paquete, el banner será clickeable y llevará al detalle de ese paquete.</p>
           </div>
 
           {/* Estado Activo */}

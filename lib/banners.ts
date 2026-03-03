@@ -12,6 +12,7 @@ function dbToBanner(row: any): Banner {
     buttonText: row.button_text,
     isActive: row.is_active,
     displayOrder: row.display_order,
+    packageId: row.package_id || undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -28,6 +29,7 @@ function bannerToDb(banner: Partial<Banner>): any {
   if (banner.buttonText !== undefined) dbBanner.button_text = banner.buttonText;
   if (banner.isActive !== undefined) dbBanner.is_active = banner.isActive;
   if (banner.displayOrder !== undefined) dbBanner.display_order = banner.displayOrder;
+  if (banner.packageId !== undefined) dbBanner.package_id = banner.packageId;
   
   return dbBanner;
 }
@@ -97,7 +99,10 @@ export async function getBannerById(id: string): Promise<Banner | null> {
  * @returns Banner creado o null si hay error
  */
 export async function addBanner(banner: Omit<Banner, 'id' | 'createdAt' | 'updatedAt'>): Promise<Banner | null> {
+  // LOG: Verificar datos recibidos en backend
+  console.log('BACKEND addBanner recibe:', banner);
   const dbBanner = bannerToDb(banner);
+  console.log('BACKEND addBanner insertará:', dbBanner);
 
   const { data, error } = await supabaseAdmin
     .from('banners')

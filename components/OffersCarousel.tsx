@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Banner } from '@/types';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function OffersCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -57,37 +58,57 @@ export default function OffersCarousel() {
     <section className="relative w-full overflow-hidden group">
       {/* Contenedor principal de imágenes */}
       <div className="relative h-[400px] md:h-[500px] lg:h-[650px] w-full">
-        {banners.map((banner, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
-          >
-            <Image
-              src={banner.imageUrl}
-              alt={banner.title}
-              fill
-              className="object-cover"
-              priority={index === 0}
-              sizes="100vw"
-            />
-            {/* Overlay mejorado para legibilidad */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            
-            {/* Texto */}
-            <div className="absolute bottom-16 left-0 w-full px-6 md:px-12 lg:px-20 z-20">
-              <h3 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-md">
-                {banner.title}
-              </h3>
-              {banner.subtitle && (
-                <p className="text-lg md:text-xl text-white/90 max-w-2xl drop-shadow-sm font-light">
-                  {banner.subtitle}
-                </p>
-              )}
+        {banners.map((banner, index) => {
+          const BannerContent = (
+            <>
+              <Image
+                src={banner.imageUrl}
+                alt={banner.title}
+                fill
+                className="object-cover"
+                priority={index === 0}
+                sizes="100vw"
+              />
+              {/* Overlay mejorado para legibilidad */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              {/* Texto */}
+              <div className="absolute bottom-16 left-0 w-full px-6 md:px-12 lg:px-20 z-20">
+                <h3 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-md">
+                  {banner.title}
+                </h3>
+                {banner.subtitle && (
+                  <p className="text-lg md:text-xl text-white/90 max-w-2xl drop-shadow-sm font-light">
+                    {banner.subtitle}
+                  </p>
+                )}
+              </div>
+            </>
+          );
+          return (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+            >
+              <div className="w-full h-full">
+                {BannerContent}
+                {banner.packageId && (
+                  <div className="absolute left-0 w-full flex justify-center z-30" style={{ top: '2rem' }}>
+                    <Link
+                      href={`/packages/${banner.packageId}`}
+                      tabIndex={index === currentIndex ? 0 : -1}
+                      aria-label={`Ver paquete: ${banner.title}`}
+                      className="inline-block px-6 py-2 rounded-full bg-transparent text-white font-semibold border border-white transition-all duration-200 text-base md:text-lg hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    >
+                      Ver paquete
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Navegación - Flechas (Solo visibles al hacer hover en el grupo) */}

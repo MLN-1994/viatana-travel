@@ -7,6 +7,10 @@ export default {
     './data/**/*.{js,ts,jsx,tsx}',
     './lib/**/*.{js,ts,jsx,tsx}',
   ],
+  safelist: [
+    'bg-primary-hover',
+    'hover:bg-primary-hover',
+  ],
   theme: {
     extend: {
       colors: {

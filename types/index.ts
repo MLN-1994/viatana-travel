@@ -18,6 +18,7 @@ export interface Banner {
   buttonText?: string;
   isActive: boolean;
   displayOrder: number;
+  packageId?: string; // ID del paquete vinculado
   createdAt?: string;
   updatedAt?: string;
 }
