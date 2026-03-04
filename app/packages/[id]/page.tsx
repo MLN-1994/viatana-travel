@@ -160,7 +160,7 @@ export default function PackageDetailPage() {
           <div className="md:col-span-1">
             <div className="bg-white rounded-xl shadow-2xl p-8 sticky top-8">
               <div className="text-center mb-6">
-                <div className="text-gray-600 text-sm mb-2">Precio por persona</div>
+                <div className="text-gray-600 text-sm mb-2">Precio por persona en base doble</div>
                 {pkg.isOffer && pkg.originalPrice && (
                   <div className="text-gray-400 line-through text-xl mb-1">
                     USD ${pkg.originalPrice}
@@ -169,7 +169,7 @@ export default function PackageDetailPage() {
                 <div className="text-5xl font-bold text-[#6A3B76] mb-1">
                   ${pkg.price}
                 </div>
-                <div className="text-gray-600 text-sm">USD por persona</div>
+                <div className="text-gray-500 text-sm">¡Reserva ahora y asegura tu lugar!</div>
               </div>
 
               <div className="border-t border-gray-200 pt-6 mb-6">
