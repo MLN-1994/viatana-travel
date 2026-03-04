@@ -56,8 +56,8 @@ export default function OffersCarousel() {
 
   return (
     <section className="relative w-full overflow-hidden group">
-      {/* Contenedor principal de imágenes */}
-      <div className="relative h-[400px] md:h-[500px] lg:h-[650px] w-full">
+      {/* Contenedor principal: Flex scrolleable en móvil, Relativo en desktop */}
+      <div className="flex md:block overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide h-[400px] md:h-[500px] lg:h-[650px] w-full">
         {banners.map((banner, index) => {
           const BannerContent = (
             <>
@@ -69,9 +69,7 @@ export default function OffersCarousel() {
                 priority={index === 0}
                 sizes="100vw"
               />
-              {/* Overlay mejorado para legibilidad */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-              {/* Texto */}
               <div className="absolute bottom-16 left-0 w-full px-6 md:px-12 lg:px-20 z-20">
                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-md">
                   {banner.title}
@@ -84,12 +82,14 @@ export default function OffersCarousel() {
               </div>
             </>
           );
+
           return (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-              }`}
+              className={`
+                relative min-w-full h-full snap-center md:absolute md:inset-0 md:transition-opacity md:duration-1000 md:ease-in-out
+                ${index === currentIndex ? 'md:opacity-100 md:z-10' : 'md:opacity-0 md:z-0'}
+              `}
             >
               <div className="w-full h-full">
                 {BannerContent}
@@ -111,9 +111,9 @@ export default function OffersCarousel() {
         })}
       </div>
 
-      {/* Navegación - Flechas (Solo visibles al hacer hover en el grupo) */}
+      {/* Navegación - Flechas (Ocultas en móvil para permitir el scroll natural) */}
       {banners.length > 1 && (
-        <>
+        <div className="hidden md:block">
           <button
             onClick={prevSlide}
             className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/20 hover:bg-black/50 text-white backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0"
@@ -133,12 +133,12 @@ export default function OffersCarousel() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </button>
-        </>
+        </div>
       )}
 
-      {/* Indicadores (Dots) */}
+      {/* Indicadores (Dots) - Ocultos en móvil para no interferir con el scroll */}
       {banners.length > 1 && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+        <div className="hidden md:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-30 gap-2">
           {banners.map((_, index) => (
             <button
               key={index}
