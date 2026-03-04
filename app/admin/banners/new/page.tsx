@@ -186,6 +186,9 @@ export default function NewBannerPage() {
                 onChange={handleFileChange}
                 className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#6A3B76] file:text-white hover:file:bg-[#5a2f66]"
               />
+                <p className="text-xs text-gray-500 mt-1">
+                  Tamaño máximo: 2MB. Formato permitido: JPG, PNG. Dimensiones recomendadas: 1600x600px (horizontal).
+                </p>
               {uploading && <span className="text-xs text-gray-500">Subiendo imagen...</span>}
               {imagePreview && (
                 <img src={imagePreview} alt="Previsualización" className="rounded-lg border max-h-40 object-contain" />
