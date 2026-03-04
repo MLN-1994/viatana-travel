@@ -16,7 +16,7 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
 
   return (
     <div className="group bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(106,59,118,0.15)] flex flex-col h-full hover:-translate-y-2 hover:border-[#6A3B76]/30">
-      
+
       {/* Contenedor de Imagen */}
       <div className="relative h-64 overflow-hidden shrink-0">
         <Link href={`/packages/${pkg.id}`} className="block h-full w-full">
@@ -44,7 +44,7 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
 
         {/* Botón flotante de "Ver más" que aparece al hacer hover */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-          <Link 
+          <Link
             href={`/packages/${pkg.id}`}
             className="bg-white text-[#6A3B76] p-4 rounded-full shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 pointer-events-auto hover:bg-[#6A3B76] hover:text-white"
           >
@@ -71,9 +71,9 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
             {pkg.title}
           </h3>
         </Link>
-        
-        <p className="text-gray-500 text-sm line-clamp-2 mb-6 leading-relaxed grow">
-           {pkg.description}
+
+        <p className="text-gray-500 text-sm line-clamp-2 mb-6 leading-relaxed grow " >
+          {pkg.description}
         </p>
 
         {/* Footer de la Card / Precios */}
@@ -85,14 +85,14 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
                   USD {pkg.originalPrice}
                 </span>
               )}
+              <span className="text-xs text-gray-500 font-semibold mb-0.5">Desde</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-gray-900 tracking-tighter">
-                  <span className="text-sm font-bold text-[#6A3B76] mr-0.5">USD</span>{pkg.price}
-                </span>
+                <span className="text-sm font-bold text-[#6A3B76]">USD</span>
+                <span className="text-3xl font-bold text-gray-900 tracking-tighter">{pkg.price}</span>
               </div>
             </div>
             <span className="text-[10px] font-bold uppercase text-gray-400 tracking-widest leading-none">
-              Por<br/>persona
+              Por persona <br /> en base doble
             </span>
           </div>
 
