@@ -29,6 +29,7 @@ export interface TravelPackage {
   destination: string;
   description: string;
   price: number;
+  currency: string;
   duration: string;
   image: string;
   isOffer?: boolean;
@@ -48,6 +49,8 @@ export interface Offer extends TravelPackage {
 export interface ContactInfo {
   phone: string;
   whatsapp: string;
+  whatsappAmba: string;
+  whatsappInterior: string;
   email: string;
   facebook?: string;
   instagram?: string;

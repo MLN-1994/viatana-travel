@@ -6,6 +6,7 @@ export const packageSchema = z.object({
   destination: z.string().min(2, "El destino es obligatorio"),
   description: z.string().min(10, "La descripción debe ser más detallada"),
   price: z.number().positive("El precio debe ser mayor a 0"),
+  currency: z.string().min(2, "La moneda es obligatoria"),
   duration: z.string().min(2, "La duración es obligatoria"),
   image: z.string().url("La imagen debe ser una URL válida"),
   isOffer: z.boolean().optional(),

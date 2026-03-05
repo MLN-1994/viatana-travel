@@ -18,6 +18,7 @@ export default function PackageForm({ packageId }: PackageFormProps) {
     destination: "",
     description: "",
     price: 0,
+    currency: "USD",
     duration: "",
     image: "",
     isOffer: false,
@@ -91,6 +92,7 @@ export default function PackageForm({ packageId }: PackageFormProps) {
     try {
       const url = packageId ? `/api/packages/${packageId}` : "/api/packages"
       const method = packageId ? "PUT" : "POST"
+      console.log("Datos enviados:", formData);
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
@@ -248,8 +250,8 @@ export default function PackageForm({ packageId }: PackageFormProps) {
             ))}
           </div>
 
-          {/* Precio */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Precio y Moneda */}
+          <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Precio *
@@ -265,6 +267,21 @@ export default function PackageForm({ packageId }: PackageFormProps) {
               {fieldErrors.price && fieldErrors.price.map((msg, i) => (
                 <div key={i} className="text-red-600 text-xs mt-1 font-semibold">{msg}</div>
               ))}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Moneda *
+              </label>
+              <select
+                required
+                value={formData.currency}
+                onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3B76] focus:border-transparent transition-all hover:border-purple-300"
+              >
+                <option value="USD">USD (dólar)</option>
+                <option value="ARS">ARS (peso argentino)</option>
+              </select>
             </div>
 
             <div>

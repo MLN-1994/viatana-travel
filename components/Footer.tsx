@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { contactInfo } from '@/data/packages';
-import { FaWhatsapp, FaFacebook, FaInstagram } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebook, FaInstagram, FaChevronUp } from 'react-icons/fa';
 
 export default function Footer() {
   const pathname = usePathname();
@@ -53,6 +53,21 @@ export default function Footer() {
   };
 
   const currentYear = new Date().getFullYear();
+  const [isOpen, setIsOpen] = useState(false);
+  const wspMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (wspMenuRef.current && !wspMenuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <footer className="bg-gray-900 text-white" id="contacto">
@@ -213,15 +228,45 @@ export default function Footer() {
 
       {/* Floating WhatsApp button - Solo visible en páginas públicas */}
       {!isAdminRoute && (
-        <a
-          href={`https://wa.me/${contactInfo.whatsapp}?text=Hola! Me gustaría recibir información sobre sus paquetes de viaje`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="fixed bottom-4 right-4 md:bottom-6 md:right-6 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 md:w-16 md:h-16 shadow-2xl transition-all hover:scale-110 z-50 flex items-center justify-center"
-          title="Contáctanos por WhatsApp"
-        >
-          <FaWhatsapp className="text-2xl md:text-3xl" />
-        </a>
+        <div ref={wspMenuRef} className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end">
+          {/* Menú Desplegable */}
+          {isOpen && (
+            <div className="mb-4 flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-5 duration-300">
+              <a
+                href={`https://wa.me/${contactInfo.whatsappAmba}?text=Hola! Quiero información.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-gray-800 px-4 py-2 rounded-lg shadow-xl border border-green-500 hover:bg-green-50 transition-colors flex items-center gap-2"
+                aria-label="Contactar por WhatsApp AMBA"
+              >
+                <FaWhatsapp className="text-xl text-black" />
+                <span className="font-medium">AMBA</span>
+              </a>
+              <a
+                href={`https://wa.me/${contactInfo.whatsappInterior}?text=Hola! Quiero información.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-gray-800 px-4 py-2 rounded-lg shadow-xl border border-green-500 hover:bg-green-50 transition-colors flex items-center gap-2"
+                aria-label="Contactar por WhatsApp Interior"
+              >
+                <FaWhatsapp className="text-xl text-black" />
+                <span className="font-medium">Interior</span>
+              </a>
+            </div>
+          )}
+
+          {/* Botón Principal Trigger */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 md:w-16 md:h-16 shadow-2xl transition-all hover:scale-110 flex items-center justify-center"
+            title="Opciones de contacto"
+            aria-label="Mostrar opciones de WhatsApp"
+            aria-expanded={isOpen}
+            aria-haspopup="true"
+          >
+            {isOpen ? <FaChevronUp className="text-xl" /> : <FaWhatsapp className="text-2xl md:text-3xl" />}
+          </button>
+        </div>
       )}
     </footer>
   );

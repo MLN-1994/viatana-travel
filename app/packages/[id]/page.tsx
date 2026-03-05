@@ -163,11 +163,11 @@ export default function PackageDetailPage() {
                 <div className="text-gray-600 text-sm mb-2">Precio por persona en base doble</div>
                 {pkg.isOffer && pkg.originalPrice && (
                   <div className="text-gray-400 line-through text-xl mb-1">
-                    USD ${pkg.originalPrice}
+                    {pkg.currency === 'ARS' ? '$' : 'USD'} {pkg.originalPrice}
                   </div>
                 )}
                 <div className="text-5xl font-bold text-[#6A3B76] mb-1">
-                  ${pkg.price}
+                  {pkg.currency === 'ARS' ? '$' : 'USD'} {pkg.price}
                 </div>
                 <div className="text-gray-500 text-sm">¡Reserva ahora y asegura tu lugar!</div>
               </div>

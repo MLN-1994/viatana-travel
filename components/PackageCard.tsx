@@ -82,13 +82,13 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
             <div className="flex flex-col">
               {pkg.isOffer && pkg.originalPrice && (
                 <span className="text-gray-400 line-through text-xs font-medium">
-                  USD {pkg.originalPrice}
+                  {pkg.currency === 'ARS' ? 'ARS $' : 'USD'} {pkg.originalPrice}
                 </span>
               )}
               <span className="text-xs text-gray-500 font-semibold mb-0.5">Desde</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-sm font-bold text-[#6A3B76]">USD</span>
-                <span className="text-3xl font-bold text-gray-900 tracking-tighter">{pkg.price}</span>
+                <span className="text-sm lg:text-lg font-bold text-[#6A3B76]">{pkg.currency === 'ARS' ? 'ARS $' : 'USD'}</span>
+                <span className="text-xl font-bold text-gray-900 tracking-tighter">{pkg.price}</span>
               </div>
             </div>
             <span className="text-[10px] font-bold uppercase text-gray-400 tracking-widest leading-none">
