@@ -130,7 +130,7 @@ export default function PackagesCarousel() {
               {filteredPackages.map((pkg) => (
                 <div
                   key={pkg.id}
-                  className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[350px] snap-start flex"
+                  className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[350px] snap-start flex items-stretch"
                 >
                   <PackageCard package={pkg} />
                 </div>

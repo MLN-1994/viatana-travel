@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { contactInfo } from '@/data/packages';
 import { FaFacebookSquare, FaInstagram } from 'react-icons/fa';
 
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -14,8 +15,8 @@ export default function Header() {
         {/* Top bar */}
         <div className="hidden md:flex justify-between items-center py-2 text-xs lg:text-sm border-b">
           <div className="flex items-center gap-3 lg:gap-4 text-gray-600">
-            <a href="tel:1147899755" className="hover:text-[#6A3B76] transition">
-              11 4789-9755
+            <a href={`tel:${contactInfo.phone}`} className="hover:text-[#6A3B76] transition">
+              {contactInfo.phone}
             </a>
             <a href={`mailto:${contactInfo.email}`} className="hover:text-[#6A3B76] transition">
               {contactInfo.email}

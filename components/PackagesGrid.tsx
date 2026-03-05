@@ -78,9 +78,11 @@ export default function PackagesGrid() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
               {filteredPackages.map((pkg) => (
-                <PackageCard key={pkg.id} package={pkg} />
+                <div key={pkg.id} className="flex">
+                  <PackageCard package={pkg} />
+                </div>
               ))}
             </div>
 

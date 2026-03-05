@@ -15,10 +15,10 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
   const whatsappLink = `https://wa.me/${contactInfo.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <div className="group bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(106,59,118,0.15)] flex flex-col h-full hover:-translate-y-2 hover:border-[#6A3B76]/30">
+    <div className="group bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(106,59,118,0.15)] flex flex-col h-full hover:-translate-y-2 hover:border-[#6A3B76]/30 max-w-[400px] mx-auto w-full">
 
       {/* Contenedor de Imagen */}
-      <div className="relative h-64 overflow-hidden shrink-0">
+      <div className="relative h-52 md:h-64 overflow-hidden shrink-0">
         <Link href={`/packages/${pkg.id}`} className="block h-full w-full">
           <Image
             src={pkg.image}
@@ -54,67 +54,70 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
       </div>
 
       {/* Contenido */}
-      <div className="p-6 flex flex-col grow">
-        <div className="flex justify-between items-start mb-3">
-          <div className="flex items-center gap-1.5 text-[#6A3B76] font-bold text-xs uppercase tracking-tighter">
-            <FaMapMarkerAlt className="opacity-70" />
-            {pkg.destination}
-          </div>
-          <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium">
-            <FaClock className="opacity-50" />
-            {pkg.duration}
-          </div>
-        </div>
+      {/* Contenido - Añadimos flex-1 y grow para que este contenedor ocupe el espacio sobrante */}
+<div className="p-5 flex flex-col flex-1 grow">
+  <div className="flex justify-between items-start mb-3">
+    <div className="flex items-center gap-1.5 text-[#6A3B76] font-bold text-xs uppercase tracking-tighter">
+      <FaMapMarkerAlt className="opacity-70" />
+      {pkg.destination}
+    </div>
+    <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium">
+      <FaClock className="opacity-50" />
+      {pkg.duration}
+    </div>
+  </div>
 
-        <Link href={`/packages/${pkg.id}`}>
-          <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#6A3B76] transition-colors leading-tight min-h-[3rem]">
-            {pkg.title}
-          </h3>
-        </Link>
+  <Link href={`/packages/${pkg.id}`}>
+    {/* min-h-[3rem] asegura que el título siempre reserve espacio para 2 líneas */}
+           <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[2.5rem] leading-tight md:min-h-[3rem] group-hover:text-[#6A3B76] transition-colors">
+      {pkg.title}
+    </h3>
+  </Link>
 
-        <p className="text-gray-500 text-sm line-clamp-2 mb-6 leading-relaxed grow " >
-          {pkg.description}
-        </p>
+  {/* La descripción empujará el footer hacia abajo uniformemente */}
+         <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed min-h-[2.5rem]">
+    {pkg.description}
+  </p>
 
-        {/* Footer de la Card / Precios */}
-        <div className="pt-5 border-t border-slate-50 mt-auto">
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex flex-col">
-              {pkg.isOffer && pkg.originalPrice && (
-                <span className="text-gray-400 line-through text-xs font-medium">
-                  {pkg.currency === 'ARS' ? 'ARS $' : 'USD'} {pkg.originalPrice}
-                </span>
-              )}
-              <span className="text-xs text-gray-500 font-semibold mb-0.5">Desde</span>
-              <div className="flex items-baseline gap-1">
-                <span className="text-sm lg:text-lg font-bold text-[#6A3B76]">{pkg.currency === 'ARS' ? 'ARS $' : 'USD'}</span>
-                <span className="text-xl font-bold text-gray-900 tracking-tighter">{pkg.price}</span>
-              </div>
-            </div>
-            <span className="text-[10px] font-bold uppercase text-gray-400 tracking-widest leading-none">
-              Por persona <br /> en base doble
-            </span>
-          </div>
-
-          <div className="grid grid-cols-5 gap-2">
-            <Link
-              href={`/packages/${pkg.id}`}
-              className="col-span-3 bg-[#6A3B76] hover:bg-[#5a2f66] text-white text-xs font-bold uppercase tracking-widest py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-purple-200"
-            >
-              Detalles
-            </Link>
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="col-span-2 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl transition-all flex items-center justify-center shadow-lg shadow-green-100"
-              title="Consultar por WhatsApp"
-            >
-              <FaWhatsapp className="text-xl" />
-            </a>
-          </div>
+  {/* Footer de la Card - El mt-auto es clave aquí para anclar los botones al fondo */}
+  <div className="pt-2 border-t border-slate-100 mt-auto">
+    <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col">
+        {pkg.isOffer && pkg.originalPrice && (
+          <span className="text-gray-400 line-through text-xs font-medium">
+            {pkg.currency === 'ARS' ? 'ARS $' : 'USD'} {pkg.originalPrice}
+          </span>
+        )}
+        <span className="text-xs text-gray-500 font-semibold mb-0.5">Desde</span>
+        <div className="flex items-baseline gap-1">
+          <span className="text-sm lg:text-lg font-bold text-[#6A3B76]">{pkg.currency === 'ARS' ? 'ARS $' : 'USD'}</span>
+          <span className="text-xl font-bold text-gray-900 tracking-tighter">{pkg.price}</span>
         </div>
       </div>
+      <span className="text-[10px] font-bold uppercase text-gray-400 tracking-widest leading-tight text-right">
+        Por persona <br /> en base doble
+      </span>
+    </div>
+
+    <div className="grid grid-cols-12 gap-2">
+      <Link
+        href={`/packages/${pkg.id}`}
+        className="col-span-8 bg-[#6A3B76] hover:bg-[#5a2f66] text-white text-[10px] md:text-xs font-bold uppercase tracking-widest py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-purple-200"
+      >
+        Detalles
+      </Link>
+      <a
+        href={whatsappLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="col-span-4 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl transition-all flex items-center justify-center shadow-lg shadow-green-100"
+        title="Consultar por WhatsApp"
+      >
+        <FaWhatsapp className="text-xl" />
+      </a>
+    </div>
+  </div>
+</div>
     </div>
   );
 }
