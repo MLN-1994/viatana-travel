@@ -76,11 +76,11 @@ export default function WhyChooseUs() {
         </div>
 
         {/* Sección de Estadísticas (Stats) */}
-        {/* <div className="mt-20 md:mt-28 p-8 md:p-12 bg-[#6A3B76] rounded-[2.5rem] shadow-2xl shadow-[#6A3B76]/20 relative overflow-hidden"> */}
+        <div className="mt-20 md:mt-28 p-8 md:p-12 bg-[#6A3B76] rounded-[2.5rem] shadow-2xl shadow-[#6A3B76]/20 relative overflow-hidden">
           {/* Decoración sutil de fondo para los stats */}
-          {/* <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl"></div> */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl"></div>
           
-          {/* <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+          <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
             {stats.map((stat, idx) => (
               <div key={idx} className="text-center">
                 <div className="text-3xl md:text-5xl font-black text-white mb-2">
@@ -91,8 +91,8 @@ export default function WhyChooseUs() {
                 </div>
               </div>
             ))}
-          </div> */}
-        {/* </div> */}
+          </div>
+        </div>
 
       </div>
     </section>
