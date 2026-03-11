@@ -4,6 +4,7 @@
 // Elimina este bloque cuando el sitio esté listo
 import OffersCarousel from '@/components/OffersCarousel';
 import Headline from '@/components/Headline';
+import NuestrosServicios from '@/components/NuestrosServicios';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import PackagesCarousel from '@/components/PackagesCarousel';
 
@@ -13,6 +14,7 @@ export default function Home() {
     <>
       <OffersCarousel />
       <Headline />
+      <NuestrosServicios />
       <PackagesCarousel />
       <WhyChooseUs />
     </>
