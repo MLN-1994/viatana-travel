@@ -11,7 +11,7 @@ export interface Category {
 
 export interface Banner {
   id: string;
-  title: string;
+  title?: string | null;
   subtitle?: string;
   imageUrl: string;
   linkUrl?: string;
