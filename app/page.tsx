@@ -6,6 +6,7 @@ import OffersCarousel from '@/components/OffersCarousel';
 import Headline from '@/components/Headline';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import PackagesCarousel from '@/components/PackagesCarousel';
+import TestimonialsSection from '@/components/TestimonialsSection';
 
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <Headline />
       <PackagesCarousel />
       <WhyChooseUs />
+      <TestimonialsSection />
     </>
   );
 }

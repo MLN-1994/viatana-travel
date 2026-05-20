@@ -5,7 +5,7 @@ export const contactInfo: ContactInfo = {
   whatsapp: '5491124967442', // Sin espacios ni símbolos para el link de WhatsApp
   whatsappAmba: '5491124967442',      
   whatsappInterior: '542613159400',
-  email: 'info@grupoviatana.com',
+  email: 'info@viatana.travel',
   facebook: 'https://www.facebook.com/people/Viatana-Travel/61581315252933/',
   instagram: 'https://www.instagram.com/viatana_travel/?hl=es',
 };

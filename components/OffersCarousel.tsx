@@ -91,7 +91,7 @@ export default function OffersCarousel() {
                 ${index === currentIndex ? 'md:opacity-100 md:z-10' : 'md:opacity-0 md:z-0'}
               `}
             >
-              <div className="w-full h-full">
+              <div className="relative w-full h-full">
                 {BannerContent}
                 {banner.packageId && (
                   <div className="absolute left-0 w-full flex justify-center z-30" style={{ top: '2rem' }}>

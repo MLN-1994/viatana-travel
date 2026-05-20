@@ -10,25 +10,51 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-  title: "Viatana Travel - Tu Próxima Aventura Comienza Aquí",
-  description: "Descubre los mejores paquetes de viaje con Viatana Travel. Ofertas exclusivas, destinos increíbles y experiencias inolvidables.",
-  keywords: ["viajes", "turismo", "paquetes turísticos", "vacaciones", "tours", "aventuras"],
+  title: {
+    default: "Viatana Travel | Agencia de Viajes en Argentina",
+    template: "%s | Viatana Travel",
+  },
+  description: "Agencia de viajes en Argentina. Paquetes turísticos nacionales e internacionales, cruceros y viajes a medida con atención personalizada. Sin bots, personas reales.",
+  keywords: [
+    "agencia de viajes Argentina",
+    "paquetes turísticos Argentina",
+    "viajes a medida",
+    "agencia de viajes Buenos Aires",
+    "paquetes de viaje AMBA",
+    "turismo nacional Argentina",
+    "viajes internacionales Argentina",
+    "cruceros Argentina",
+    "Viatana Travel",
+    "viajes baratos Argentina",
+  ],
   authors: [{ name: "Viatana Travel" }],
   creator: "Viatana Travel",
   publisher: "Viatana Travel",
-  metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXTAUTH_URL || 'https://viatana.travel'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: "Viatana Travel - Tu Próxima Aventura Comienza Aquí",
-    description: "Descubre los mejores paquetes de viaje con Viatana Travel.",
-    url: "/",
+    title: "Viatana Travel | Agencia de Viajes en Argentina",
+    description: "Paquetes turísticos nacionales e internacionales con atención personalizada. Viajá con Viatana — sin bots, personas reales.",
+    url: "https://viatana.travel",
     siteName: "Viatana Travel",
-    locale: "es_PE",
+    locale: "es_AR",
     type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Viatana Travel - Agencia de Viajes Argentina",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Viatana Travel",
-    description: "Descubre los mejores paquetes de viaje con Viatana Travel.",
+    title: "Viatana Travel | Agencia de Viajes en Argentina",
+    description: "Paquetes turísticos nacionales e internacionales con atención personalizada.",
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -36,6 +62,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
     },
   },
 };
@@ -49,6 +78,34 @@ export default function RootLayout({
     <html lang="es">
       <head>
         <link rel="icon" href="/favicon.ico" />
+        {/* JSON-LD: LocalBusiness para Google */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "TravelAgency",
+              name: "Viatana Travel",
+              url: "https://viatana.travel",
+              logo: "https://viatana.travel/logo largo violeta.png",
+              image: "https://viatana.travel/og-image.jpg",
+              description: "Agencia de viajes en Argentina. Paquetes turísticos nacionales e internacionales con atención personalizada.",
+              telephone: "+5491147899755",
+              email: "info@viatana.travel",
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "AR",
+                addressRegion: "Buenos Aires",
+              },
+              areaServed: ["Argentina"],
+              priceRange: "$$",
+              sameAs: [
+                "https://www.facebook.com/people/Viatana-Travel/61581315252933/",
+                "https://www.instagram.com/viatana_travel/",
+              ],
+            }),
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `

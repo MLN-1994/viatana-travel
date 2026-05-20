@@ -46,6 +46,39 @@ export interface Offer extends TravelPackage {
   originalPrice: number;
 }
 
+export interface Testimonial {
+  id: string;
+  firstName: string;
+  lastName: string;
+  destination: string;
+  content: string;
+  date: string;
+  rating: number;
+  avatarUrl?: string;
+  photo1Url?: string;
+  photo2Url?: string;
+  photo3Url?: string;
+  isActive: boolean;
+  displayOrder: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Post {
+  id: string;
+  title: string;
+  subtitle?: string;
+  slug: string;
+  coverImage: string;
+  secondImage?: string;
+  contentP1: string;
+  contentP2?: string;
+  excerpt: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface ContactInfo {
   phone: string;
   whatsapp: string;

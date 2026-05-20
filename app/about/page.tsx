@@ -4,9 +4,15 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { contactInfo } from '@/data/packages';
 
 export const metadata: Metadata = {
-  title: 'Sobre Nosotros - Viatana Travel',
-  description: 'Conoce nuestra historia, misión, visión y valores. Viatana Travel es tu agencia de viajes de confianza con años de experiencia creando experiencias inolvidables.',
-  keywords: 'sobre nosotros, viatana travel, agencia de viajes, nuestra historia, misión, visión, valores',
+  title: 'Sobre Nosotros',
+  description: 'Somos Viatana Travel, una agencia de viajes argentina con atención personalizada. Conocé nuestra historia y por qué miles de viajeros confían en nosotros.',
+  keywords: 'agencia de viajes argentina, Viatana Travel, quiénes somos, agencia de turismo Buenos Aires',
+  alternates: { canonical: '/about' },
+  openGraph: {
+    title: 'Sobre Nosotros | Viatana Travel',
+    description: 'Somos una agencia de viajes argentina con atención personalizada. Sin bots, personas reales.',
+    url: 'https://viatana.travel/about',
+  },
 };
 
 export default function AboutPage() {

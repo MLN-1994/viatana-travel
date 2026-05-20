@@ -56,6 +56,9 @@ export default function Header() {
             <Link href="/about" className="text-gray-700 hover:text-[#6A3B76] font-medium transition">
               Nosotros
             </Link>
+            <Link href="/blog-de-viajes" className="text-gray-700 hover:text-[#6A3B76] font-medium transition">
+              Blog de Viajes
+            </Link>
             <Link href="#contacto" className="text-gray-700 hover:text-[#6A3B76] font-medium transition">
               Contacto
             </Link>
@@ -78,6 +81,9 @@ export default function Header() {
             </Link>
             <Link href="/about" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
               Nosotros
+            </Link>
+            <Link href="/blog-de-viajes" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
+              Blog de Viajes
             </Link>
             <Link href="#contacto" className="text-gray-700 hover:text-[#6A3B76] font-medium py-2">
               Contacto

@@ -150,6 +150,51 @@ export default function AdminDashboard() {
               </div>
             </div>
           </button>
+
+          <button
+            onClick={() => router.push('/admin/testimonials')}
+            className="bg-white rounded-xl shadow-md p-6 border-l-4 border-yellow-400 hover:shadow-lg transition text-left cursor-pointer transform hover:scale-105"
+          >
+            <div className="flex items-center gap-4">
+              <div className="bg-yellow-400 p-3 rounded-lg">
+                <span className="text-2xl">💬</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">Testimonios</h3>
+                <p className="text-sm text-gray-500">Experiencias de clientes</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => router.push('/admin/posts')}
+            className="bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-500 hover:shadow-lg transition text-left cursor-pointer transform hover:scale-105"
+          >
+            <div className="flex items-center gap-4">
+              <div className="bg-emerald-500 p-3 rounded-lg">
+                <span className="text-2xl">✍️</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">Blog de Viajes</h3>
+                <p className="text-sm text-gray-500">Entradas del blog</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => router.push('/admin/contenido')}
+            className="bg-white rounded-xl shadow-md p-6 border-l-4 border-teal-500 hover:shadow-lg transition text-left cursor-pointer transform hover:scale-105"
+          >
+            <div className="flex items-center gap-4">
+              <div className="bg-teal-500 p-3 rounded-lg">
+                <span className="text-2xl">✏️</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-800">Contenido</h3>
+                <p className="text-sm text-gray-500">Textos del sitio</p>
+              </div>
+            </div>
+          </button>
         </div>
 
         {/* Action Bar */}

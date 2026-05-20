@@ -19,11 +19,12 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
 
       {/* Contenedor de Imagen */}
       <div className="relative h-52 md:h-64 overflow-hidden shrink-0">
-        <Link href={`/packages/${pkg.id}`} className="block h-full w-full">
+        <Link href={`/packages/${pkg.id}`} className="relative block h-full w-full">
           <Image
             src={pkg.image}
             alt={pkg.title}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
           {/* Overlay gradiente para legibilidad */}
