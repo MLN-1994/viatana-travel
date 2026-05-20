@@ -63,7 +63,7 @@ export default function OffersCarousel() {
             <>
               <Image
                 src={banner.imageUrl}
-                alt={banner.title}
+                alt={banner.title || 'Banner'}
                 fill
                 className="object-cover"
                 priority={index === 0}

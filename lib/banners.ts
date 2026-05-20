@@ -22,14 +22,14 @@ function dbToBanner(row: any): Banner {
 function bannerToDb(banner: Partial<Banner>): any {
   const dbBanner: any = {};
   
-  if (banner.title !== undefined) dbBanner.title = banner.title;
+  if (banner.title !== undefined) dbBanner.title = banner.title || null;
   if (banner.subtitle !== undefined) dbBanner.subtitle = banner.subtitle;
   if (banner.imageUrl !== undefined) dbBanner.image_url = banner.imageUrl;
   if (banner.linkUrl !== undefined) dbBanner.link_url = banner.linkUrl;
   if (banner.buttonText !== undefined) dbBanner.button_text = banner.buttonText;
   if (banner.isActive !== undefined) dbBanner.is_active = banner.isActive;
   if (banner.displayOrder !== undefined) dbBanner.display_order = banner.displayOrder;
-  if (banner.packageId !== undefined) dbBanner.package_id = banner.packageId;
+  if (banner.packageId !== undefined && banner.packageId !== '') dbBanner.package_id = banner.packageId;
   
   return dbBanner;
 }
