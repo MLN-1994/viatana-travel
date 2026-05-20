@@ -61,7 +61,7 @@ export default function EditBannerPage() {
       if (response.ok) {
         const banner: Banner = await response.json();
         setFormData({
-          title: banner.title,
+          title: banner.title || '',
           subtitle: banner.subtitle || '',
           imageUrl: banner.imageUrl,
           isActive: banner.isActive,

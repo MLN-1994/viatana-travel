@@ -24,7 +24,7 @@ export default function AdminBannersPage() {
     }
   };
 
-  const handleDelete = async (id: string, title: string) => {
+  const handleDelete = async (id: string, title: string | null | undefined) => {
     if (!confirm(`¿Seguro que deseas eliminar el banner "${title}"?`)) {
       return;
     }
