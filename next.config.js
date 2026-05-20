@@ -24,6 +24,11 @@ module.exports = {
         hostname: 'uczduafrkhbeorrdelul.supabase.co',
         pathname: '/storage/v1/object/public/testimonials/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'uczduafrkhbeorrdelul.supabase.co',
+        pathname: '/storage/v1/object/public/posts/**',
+      },
     ],
   },
 };
