@@ -18,7 +18,25 @@ export default {
           DEFAULT: '#6A3B76',
           hover: '#5a2f66',
         },
-        // Agrega aquí más colores semánticos si los necesitas
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: '0' },
+          to:   { opacity: '1' },
+        },
+        slideUp: {
+          from: { transform: 'translateY(100%)' },
+          to:   { transform: 'translateY(0)' },
+        },
+        scaleIn: {
+          from: { opacity: '0', transform: 'scale(0.95) translateY(8px)' },
+          to:   { opacity: '1', transform: 'scale(1) translateY(0)' },
+        },
+      },
+      animation: {
+        fadeIn:  'fadeIn 0.2s ease-out',
+        slideUp: 'slideUp 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
+        scaleIn: 'scaleIn 0.2s ease-out',
       },
     },
   },

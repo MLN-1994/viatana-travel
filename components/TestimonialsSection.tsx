@@ -1,10 +1,281 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import type { Testimonial } from '@/types';
 
-// Componente de estrellas según rating real
+// ─── Lightbox ────────────────────────────────────────────────────────────────
+interface LightboxProps {
+  photos: string[];
+  initialIndex: number;
+  authorName: string;
+  onClose: () => void;
+  isNested?: boolean;
+}
+
+function Lightbox({ photos, initialIndex, authorName, onClose, isNested = false }: LightboxProps) {
+  const [current, setCurrent] = useState(initialIndex);
+
+  const prev = useCallback(() => setCurrent((c) => Math.max(c - 1, 0)), []);
+  const next = useCallback(() => setCurrent((c) => Math.min(c + 1, photos.length - 1)), [photos.length]);
+
+  // Solo bloquea el scroll si no hay un padre que ya lo haga (ej: modal)
+  useEffect(() => {
+    if (isNested) return;
+    const saved = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = saved; };
+  }, [isNested]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose, next, prev]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm animate-fadeIn"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Fotos de ${authorName}`}
+    >
+      {/* Botón cerrar */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
+        aria-label="Cerrar"
+      >
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Contador */}
+      {photos.length > 1 && (
+        <span className="absolute top-5 left-1/2 -translate-x-1/2 text-white/60 text-sm font-medium tracking-widest">
+          {current + 1} / {photos.length}
+        </span>
+      )}
+
+      {/* Imagen principal */}
+      <div
+        className="relative w-full max-w-3xl mx-16 aspect-[4/3]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Image
+          key={photos[current]}
+          src={photos[current]}
+          alt={`Foto ${current + 1} de ${authorName}`}
+          fill
+          sizes="(max-width: 768px) 100vw, 896px"
+          className="object-contain"
+          priority
+        />
+      </div>
+
+      {/* Flecha izquierda */}
+      {current > 0 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); prev(); }}
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/25 text-white p-3 rounded-full transition-colors"
+          aria-label="Foto anterior"
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      )}
+
+      {/* Flecha derecha */}
+      {current < photos.length - 1 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); next(); }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/25 text-white p-3 rounded-full transition-colors"
+          aria-label="Foto siguiente"
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
+
+      {/* Thumbnails */}
+      {photos.length > 1 && (
+        <div
+          className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {photos.map((url, i) => (
+            <button
+              key={url}
+              onClick={() => setCurrent(i)}
+              className={`relative w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                i === current ? 'border-white opacity-100 scale-110' : 'border-transparent opacity-50 hover:opacity-80'
+              }`}
+              aria-label={`Ver foto ${i + 1}`}
+            >
+              <Image src={url} alt="" fill sizes="48px" className="object-cover" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── Testimonial Modal ───────────────────────────────────────────────────────
+const CONTENT_THRESHOLD = 180;
+
+interface TestimonialModalProps {
+  testimonial: Testimonial;
+  onClose: () => void;
+}
+
+function TestimonialModal({ testimonial, onClose }: TestimonialModalProps) {
+  const [lightbox, setLightbox] = useState<number | null>(null);
+
+  const photos = [
+    testimonial.photo1Url,
+    testimonial.photo2Url,
+    testimonial.photo3Url,
+  ].filter(Boolean) as string[];
+
+  useEffect(() => {
+    const saved = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      // Solo cierra el modal si el lightbox interno NO está abierto
+      if (e.key === 'Escape' && lightbox === null) onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = saved;
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [onClose, lightbox]);
+
+  return (
+    <div
+      className="fixed inset-0 z-40 flex items-end md:items-center justify-center animate-fadeIn"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Testimonio de ${testimonial.firstName} ${testimonial.lastName}`}
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+
+      {/* Panel: bottom-sheet en mobile, dialog centrado en desktop */}
+      <div
+        className="relative z-10 bg-white w-full md:max-w-lg rounded-t-3xl md:rounded-2xl max-h-[90vh] overflow-y-auto animate-slideUp md:animate-scaleIn shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Drag handle — solo mobile */}
+        <div className="flex justify-center pt-3 pb-1 md:hidden" aria-hidden="true">
+          <div className="w-10 h-1 bg-gray-300 rounded-full" />
+        </div>
+
+        {/* Header */}
+        <div className="flex items-start justify-between px-6 pt-5 md:pt-6 pb-2">
+          <div className="flex items-center gap-3">
+            <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0">
+              {testimonial.avatarUrl ? (
+                <Image
+                  src={testimonial.avatarUrl}
+                  alt={`${testimonial.firstName} ${testimonial.lastName}`}
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                />
+              ) : (
+                <div className={`w-full h-full flex items-center justify-center text-white font-semibold text-sm ${avatarColor(testimonial.id)}`}>
+                  {getInitials(testimonial.firstName, testimonial.lastName)}
+                </div>
+              )}
+            </div>
+            <div className="min-w-0">
+              <p className="font-semibold text-gray-900 text-base">
+                {testimonial.firstName} {testimonial.lastName}
+              </p>
+              <p className="text-gray-400 text-sm">{formatDate(testimonial.date)}</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-700 transition-colors p-1.5 rounded-full hover:bg-gray-100 shrink-0 ml-2"
+            aria-label="Cerrar"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Contenido */}
+        <div className="px-6 pb-8 space-y-4">
+          {/* Estrellas */}
+          <StarRating rating={testimonial.rating} />
+
+          {/* Destino */}
+          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#6A3B76] bg-purple-50 px-2.5 py-1 rounded-full">
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {testimonial.destination}
+          </span>
+
+          {/* Texto completo */}
+          <p className="text-gray-700 text-base leading-relaxed">
+            {testimonial.content}
+          </p>
+
+          {/* Fotos */}
+          {photos.length > 0 && (
+            <div className="flex gap-2 pt-1">
+              {photos.map((url, i) => (
+                <button
+                  key={url}
+                  onClick={() => setLightbox(i)}
+                  className="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden group/mphoto cursor-zoom-in"
+                  aria-label={`Ver foto ${i + 1} en grande`}
+                >
+                  <Image
+                    src={url}
+                    alt={`Foto ${i + 1}`}
+                    fill
+                    sizes="96px"
+                    className="object-cover transition-transform duration-300 group-hover/mphoto:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover/mphoto:bg-black/20 transition-colors duration-300" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Lightbox sobre el modal */}
+      {lightbox !== null && (
+        <Lightbox
+          photos={photos}
+          initialIndex={lightbox}
+          authorName={`${testimonial.firstName} ${testimonial.lastName}`}
+          onClose={() => setLightbox(null)}
+          isNested
+        />
+      )}
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5">
@@ -56,6 +327,10 @@ interface TestimonialCardProps {
 }
 
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [modal, setModal] = useState(false);
+  const showReadMore = testimonial.content.length > CONTENT_THRESHOLD;
+
   const photos = [
     testimonial.photo1Url,
     testimonial.photo2Url,
@@ -63,7 +338,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
   ].filter(Boolean) as string[];
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 flex flex-col gap-4 min-w-[300px] max-w-[340px] snap-start hover:shadow-lg transition-shadow duration-200">
+    <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 flex flex-col gap-4 min-w-[360px] max-w-[400px] snap-start hover:shadow-lg transition-shadow duration-200">
       {/* Header: avatar + nombre + fecha */}
       <div className="flex items-center gap-3">
         <div className="relative w-11 h-11 rounded-full overflow-hidden shrink-0">
@@ -102,25 +377,63 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
       </span>
 
       {/* Texto del testimonio */}
-      <p className="text-gray-600 text-sm leading-relaxed line-clamp-5">
-        {testimonial.content}
-      </p>
+      <div>
+        <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">
+          {testimonial.content}
+        </p>
+        {showReadMore && (
+          <button
+            onClick={() => setModal(true)}
+            className="mt-1.5 text-sm font-medium text-[#6A3B76] hover:text-[#5a2f66] transition-colors cursor-pointer"
+          >
+            Leer más →
+          </button>
+        )}
+      </div>
 
       {/* Fotos opcionales */}
       {photos.length > 0 && (
-        <div className="flex gap-2 mt-1">
+        <div className="flex gap-2 mt-auto pt-2">
           {photos.map((url, i) => (
-            <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0">
+            <button
+              key={url}
+              onClick={() => setLightbox(i)}
+              className="relative w-20 h-20 shrink-0 rounded-xl overflow-hidden group/photo cursor-zoom-in"
+              aria-label={`Ver foto ${i + 1} en grande`}
+            >
               <Image
                 src={url}
                 alt={`Foto ${i + 1} de ${testimonial.firstName}`}
                 fill
                 sizes="80px"
-                className="object-cover"
+                className="object-cover transition-transform duration-300 group-hover/photo:scale-110"
               />
-            </div>
+              <div className="absolute inset-0 bg-black/0 group-hover/photo:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300 drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
+            </button>
           ))}
         </div>
+      )}
+
+      {/* Lightbox */}
+      {lightbox !== null && (
+        <Lightbox
+          photos={photos}
+          initialIndex={lightbox}
+          authorName={`${testimonial.firstName} ${testimonial.lastName}`}
+          onClose={() => setLightbox(null)}
+        />
+      )}
+
+      {/* Modal testimonio completo */}
+      {modal && (
+        <TestimonialModal
+          testimonial={testimonial}
+          onClose={() => setModal(false)}
+        />
       )}
     </div>
   );
